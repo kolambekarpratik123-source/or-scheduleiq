@@ -1,0 +1,57 @@
+table dim_patient_risk_tier
+	lineageTag: f5662185-1925-45f5-b48e-f7536815b2e8
+
+	column RiskTierKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 83dc1a4c-6d86-431f-8311-1795ce063fa3
+		summarizeBy: none
+		sourceColumn: RiskTierKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RiskTierName
+		dataType: string
+		lineageTag: 54a44856-74b0-46f1-8c6a-09a9938bacbc
+		summarizeBy: none
+		sourceColumn: RiskTierName
+		sortByColumn: RiskTierKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CCIRange
+		dataType: string
+		lineageTag: 1657a686-0cfd-4af5-ae78-40b334b962d9
+		summarizeBy: none
+		sourceColumn: CCIRange
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASARange
+		dataType: string
+		lineageTag: 1cfa4d39-ba05-4e05-bd1a-9f6bc75e52a7
+		summarizeBy: none
+		sourceColumn: ASARange
+
+		annotation SummarizationSetBy = Automatic
+
+	column ICUProbabilityBand
+		dataType: string
+		lineageTag: 8236a1a9-1702-4b08-8ce5-a6d792dd5bfb
+		summarizeBy: none
+		sourceColumn: ICUProbabilityBand
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_patient_risk_tier = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\dim_patient_risk_tier.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"RiskTierKey", Int64.Type}, {"RiskTierName", type text}, {"CCIRange", type text}, {"ASARange", type text}, {"ICUProbabilityBand", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

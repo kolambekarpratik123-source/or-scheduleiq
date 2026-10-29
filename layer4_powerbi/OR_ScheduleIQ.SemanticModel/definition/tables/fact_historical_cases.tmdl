@@ -1,0 +1,505 @@
+table fact_historical_cases
+	lineageTag: 3585d0a0-c17d-408d-8085-9e06468470c6
+
+	column case_id
+		dataType: int64
+		formatString: 0
+		lineageTag: cc0c2e6c-0073-4749-a1aa-6b472fa7c6df
+		summarizeBy: none
+		sourceColumn: case_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column subject_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a2f4889-b464-4b39-b6c8-9920ba056f5e
+		summarizeBy: none
+		sourceColumn: subject_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column hadm_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 390f4282-00e1-4b68-b4d3-ff422d4e38dd
+		summarizeBy: none
+		sourceColumn: hadm_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column room_id
+		dataType: string
+		lineageTag: 2b9e6854-4942-4386-9855-3fe23127a547
+		summarizeBy: none
+		sourceColumn: room_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column procedure_id
+		dataType: string
+		lineageTag: 7fff790a-d917-4267-9012-b674c87e8ecd
+		summarizeBy: none
+		sourceColumn: procedure_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column surgeon_id
+		dataType: string
+		lineageTag: 7a5a0987-6a6d-42e5-9e14-722de29dadee
+		summarizeBy: none
+		sourceColumn: surgeon_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ba87a08e-0c3c-489c-a4bf-138e2e1729e3
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 5a36bbcb-c71f-4f0d-ba2a-7f39617b58cf
+		summarizeBy: none
+		sourceColumn: scheduled_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column start_timeslot_key
+		dataType: double
+		lineageTag: 6d01ee62-f4ce-4d9e-a525-4ec5a7bd56d1
+		summarizeBy: sum
+		sourceColumn: start_timeslot_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column end_timeslot_key
+		dataType: double
+		lineageTag: e2013a5e-0ffe-4bd0-b2b7-aca170886857
+		summarizeBy: sum
+		sourceColumn: end_timeslot_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_start_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 7074191e-39d0-482b-940f-552b5895991e
+		summarizeBy: none
+		sourceColumn: scheduled_start_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_end_min
+		dataType: int64
+		formatString: 0
+		lineageTag: c6603328-f384-4891-a31e-158d2feab890
+		summarizeBy: none
+		sourceColumn: scheduled_end_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_start_min
+		dataType: int64
+		formatString: 0
+		lineageTag: de8cd7ef-7241-4c49-9105-6434e378472b
+		summarizeBy: none
+		sourceColumn: actual_start_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_end_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ea65af1-6d26-4017-853d-1da0741d4f52
+		summarizeBy: none
+		sourceColumn: actual_end_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_duration_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f1745b8-9fe2-4453-a70b-967784113097
+		summarizeBy: none
+		sourceColumn: scheduled_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_duration_min
+		dataType: int64
+		formatString: 0
+		lineageTag: ccc7e5fe-bea7-4d4d-944d-b77b10e6a68f
+		summarizeBy: none
+		sourceColumn: actual_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration_min
+		dataType: int64
+		formatString: 0
+		lineageTag: d53d0182-d1f3-4ad9-819b-1c0649815ff9
+		summarizeBy: none
+		sourceColumn: duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_duration_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 5993af3c-7d7f-4439-ada0-301f261f4cf7
+		summarizeBy: none
+		sourceColumn: pacu_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_los_hours
+		dataType: double
+		lineageTag: 93d9b352-6a81-492e-9597-6864bee5d884
+		summarizeBy: sum
+		sourceColumn: icu_los_hours
+
+		annotation SummarizationSetBy = Automatic
+
+	column overrun_min
+		dataType: int64
+		formatString: 0
+		lineageTag: f9526818-53bc-4fb0-9ff9-2e7fb8c72b64
+		summarizeBy: none
+		sourceColumn: overrun_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column asa_ps_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 773b9bf5-20c9-40e7-87a2-226c5afbf64a
+		summarizeBy: none
+		sourceColumn: asa_ps_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column emergency_flag
+		dataType: boolean
+		lineageTag: 4eea88eb-e80d-4322-9b7a-f74d7ab11029
+		summarizeBy: none
+		sourceColumn: emergency_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_status
+		dataType: string
+		lineageTag: ab5deec0-729f-4e72-b250-503c6b682502
+		summarizeBy: none
+		sourceColumn: case_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column procedure_name
+		dataType: string
+		lineageTag: 0396678a-8231-42a9-b563-9bbc91bc0241
+		summarizeBy: none
+		sourceColumn: procedure_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column specialty
+		dataType: string
+		lineageTag: d69f9ec0-d80a-476c-86e0-50b35d9e766e
+		summarizeBy: none
+		sourceColumn: specialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column procedure_category
+		dataType: string
+		lineageTag: 1e3ae215-11ea-4b2a-9962-a94864d8b641
+		summarizeBy: none
+		sourceColumn: procedure_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column complexity_score
+		dataType: int64
+		formatString: 0
+		lineageTag: b1c8ef12-35f8-497c-8d0d-7762bfe5dca4
+		summarizeBy: none
+		sourceColumn: complexity_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column proc_p10_min
+		dataType: double
+		lineageTag: 6bfe256a-e9fe-4c4f-b324-cc7a22f9f342
+		summarizeBy: sum
+		sourceColumn: proc_p10_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column proc_p50_min
+		dataType: double
+		lineageTag: 922fd24a-02c5-4a92-af5f-7aa7e9dd0872
+		summarizeBy: sum
+		sourceColumn: proc_p50_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column proc_p90_min
+		dataType: double
+		lineageTag: bbb78f42-2891-4e6e-a982-825692135584
+		summarizeBy: sum
+		sourceColumn: proc_p90_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column proc_lognorm_mu
+		dataType: double
+		lineageTag: 70c62e3e-1cb7-4511-96eb-977444f81fdc
+		summarizeBy: sum
+		sourceColumn: proc_lognorm_mu
+
+		annotation SummarizationSetBy = Automatic
+
+	column proc_lognorm_sigma
+		dataType: double
+		lineageTag: 41d2ae58-cb78-443d-8a79-76f9ff4a8b0d
+		summarizeBy: sum
+		sourceColumn: proc_lognorm_sigma
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration_risk_tier
+		dataType: string
+		lineageTag: ce79aeda-0b65-4a3a-92e0-9b175c4dbb9e
+		summarizeBy: none
+		sourceColumn: duration_risk_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column cci_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ff5f148-5701-4cb4-a27b-ee29eefd6506
+		summarizeBy: none
+		sourceColumn: cci_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_asa_score
+		dataType: double
+		lineageTag: f82b3dd8-4679-4cba-be0e-b24dfb2fdcc0
+		summarizeBy: sum
+		sourceColumn: avg_asa_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_tier
+		dataType: string
+		lineageTag: b6a4725e-4b29-40ea-8ee4-bf290bb7a746
+		summarizeBy: none
+		sourceColumn: risk_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column predicted_icu_prob
+		dataType: double
+		lineageTag: 0977f802-744d-4403-a7b8-59b913f9a04e
+		summarizeBy: sum
+		sourceColumn: predicted_icu_prob
+
+		annotation SummarizationSetBy = Automatic
+
+	column velocity_index
+		dataType: double
+		lineageTag: b189e613-68a8-45ef-aa42-9d850be9d7db
+		summarizeBy: sum
+		sourceColumn: velocity_index
+
+		annotation SummarizationSetBy = Automatic
+
+	column surgeon_overrun_pct
+		dataType: double
+		lineageTag: 20cf1c1c-ac92-4b87-9c4e-b4e00b462fd8
+		summarizeBy: sum
+		sourceColumn: surgeon_overrun_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column surgeon_tier
+		dataType: string
+		lineageTag: 642efbbd-23f3-495a-8888-73333ffd5964
+		summarizeBy: none
+		sourceColumn: surgeon_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_transfer_flag
+		dataType: boolean
+		lineageTag: 93034722-40ef-4a64-9f0d-772a23d49bc8
+		summarizeBy: none
+		sourceColumn: icu_transfer_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column complication_flag
+		dataType: boolean
+		lineageTag: 0aac138c-b4f9-4b18-b86c-663e74538675
+		summarizeBy: none
+		sourceColumn: complication_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column readmission_30d_flag
+		dataType: boolean
+		lineageTag: e440e3e4-f764-49d4-9820-31a7f169496e
+		summarizeBy: none
+		sourceColumn: readmission_30d_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column exceeded_p90_flag
+		dataType: boolean
+		lineageTag: 01e332f2-1519-4bf3-9c46-81e727b09efe
+		summarizeBy: none
+		sourceColumn: exceeded_p90_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column major_overrun_flag
+		dataType: boolean
+		lineageTag: 886649b5-74eb-4a8e-8907-3a4a4dfbe783
+		summarizeBy: none
+		sourceColumn: major_overrun_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column utilization_fraction
+		dataType: double
+		lineageTag: e9cd220c-ab73-4e2f-8178-d3a14b3e26d9
+		summarizeBy: sum
+		sourceColumn: utilization_fraction
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_year
+		dataType: int64
+		formatString: 0
+		lineageTag: ed3a7506-d4f0-43e9-b885-4008f9f2a288
+		summarizeBy: none
+		sourceColumn: case_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 2796539f-c8fa-4714-9c38-d9b867f8f444
+		summarizeBy: none
+		sourceColumn: case_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: int64
+		formatString: 0
+		lineageTag: bd348306-16b2-4484-b21b-ceca31bb87d1
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: e1087143-f145-4650-9c98-dd9b6ddf6e05
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_hold_flag
+		dataType: boolean
+		lineageTag: 80bb1784-c45a-493f-969a-1e8bf9ada071
+		summarizeBy: none
+		sourceColumn: pacu_hold_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column overtime_minutes
+		dataType: int64
+		formatString: 0
+		lineageTag: 1da3e4ea-f9aa-4d6f-a54c-4377cd6e747e
+		summarizeBy: none
+		sourceColumn: overtime_minutes
+
+		annotation SummarizationSetBy = Automatic
+
+	column overtime_cost_inr
+		dataType: int64
+		formatString: 0
+		lineageTag: c3e329e9-5c97-4e87-89a9-a75269ebd17e
+		summarizeBy: none
+		sourceColumn: overtime_cost_inr
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_source
+		dataType: string
+		lineageTag: ba1c5cc6-9be1-4cea-93f6-17d26de0b029
+		summarizeBy: none
+		sourceColumn: data_source
+
+		annotation SummarizationSetBy = Automatic
+
+	column exported_at
+		dataType: string
+		lineageTag: 82867d8a-9c4e-47e1-a8e6-6ddaf8d6fbdb
+		summarizeBy: none
+		sourceColumn: exported_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column VelocityIndex
+		dataType: double
+		lineageTag: 69311c1e-150f-474a-8b5d-324e59f99ec7
+		summarizeBy: sum
+		sourceColumn: VelocityIndex
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExceededP90_Flag
+		dataType: boolean
+		lineageTag: 3dc66324-c2d5-4990-a249-f8d632e0f6b3
+		summarizeBy: none
+		sourceColumn: ExceededP90_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecialtyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ae237373-6a12-42ec-b0a6-a6f327d9a777
+		summarizeBy: none
+		sourceColumn: SpecialtyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_historical_cases = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\fact_historical_cases.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Removed = Table.RemoveColumns(Promoted, {"CCI_Score"}),
+				    Typed = Table.TransformColumnTypes(Removed, {{"case_id", Int64.Type}, {"subject_id", Int64.Type}, {"hadm_id", Int64.Type}, {"room_id", type text}, {"procedure_id", type text}, {"surgeon_id", type text}, {"date_key", Int64.Type}, {"scheduled_date", type date}, {"start_timeslot_key", type number}, {"end_timeslot_key", type number}, {"scheduled_start_min", Int64.Type}, {"scheduled_end_min", Int64.Type}, {"actual_start_min", Int64.Type}, {"actual_end_min", Int64.Type}, {"scheduled_duration_min", Int64.Type}, {"actual_duration_min", Int64.Type}, {"duration_min", Int64.Type}, {"pacu_duration_min", Int64.Type}, {"icu_los_hours", type number}, {"overrun_min", Int64.Type}, {"asa_ps_score", Int64.Type}, {"emergency_flag", type logical}, {"case_status", type text}, {"procedure_name", type text}, {"specialty", type text}, {"procedure_category", type text}, {"complexity_score", Int64.Type}, {"proc_p10_min", type number}, {"proc_p50_min", type number}, {"proc_p90_min", type number}, {"proc_lognorm_mu", type number}, {"proc_lognorm_sigma", type number}, {"duration_risk_tier", type text}, {"cci_score", Int64.Type}, {"avg_asa_score", type number}, {"risk_tier", type text}, {"predicted_icu_prob", type number}, {"velocity_index", type number}, {"surgeon_overrun_pct", type number}, {"surgeon_tier", type text}, {"icu_transfer_flag", type logical}, {"complication_flag", type logical}, {"readmission_30d_flag", type logical}, {"exceeded_p90_flag", type logical}, {"major_overrun_flag", type logical}, {"utilization_fraction", type number}, {"case_year", Int64.Type}, {"case_month", Int64.Type}, {"day_of_week", Int64.Type}, {"day_name", type text}, {"pacu_hold_flag", type logical}, {"overtime_minutes", Int64.Type}, {"overtime_cost_inr", Int64.Type}, {"data_source", type text}, {"exported_at", type text}, {"VelocityIndex", type number}, {"ExceededP90_Flag", type logical}, {"SpecialtyKey", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

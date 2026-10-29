@@ -1,0 +1,160 @@
+table dim_date
+	lineageTag: 827484eb-627c-42be-a514-0940f29a76ec
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 0772ae98-ef6e-4ffc-9ce9-cfa880f3c5ca
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a8d29f8d-ea84-455d-bbcb-e9f18c1f2c12
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 2848fac9-2cc7-4ac9-905d-d0a8e662ab75
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: int64
+		formatString: 0
+		lineageTag: 2e5e61fa-ff75-41e8-865b-0a56ff26565a
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 71a5404e-d872-4f40-a2a9-39131aa4de0e
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		dataType: string
+		lineageTag: 9e87a071-2699-419b-8e11-a2eb79472af1
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthShort
+		dataType: string
+		lineageTag: 333fce64-e731-4308-ad89-4048774ee928
+		summarizeBy: none
+		sourceColumn: MonthShort
+		sortByColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d1b70d9-5870-480a-acd6-f501b3b6ac45
+		summarizeBy: none
+		sourceColumn: Week
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeek
+		dataType: int64
+		formatString: 0
+		lineageTag: 28e3e338-d10c-4839-8c82-5c3046ab4333
+		summarizeBy: none
+		sourceColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayName
+		dataType: string
+		lineageTag: e7e8a09f-5cf2-442c-8194-c6db705d318f
+		summarizeBy: none
+		sourceColumn: DayName
+		sortByColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayShort
+		dataType: string
+		lineageTag: 2b738b06-bd01-4e15-b654-68190b1b7e41
+		summarizeBy: none
+		sourceColumn: DayShort
+		sortByColumn: DayOfWeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekend
+		dataType: boolean
+		lineageTag: 2bc0b0fb-baf5-4696-8d34-c9b7a3466c01
+		summarizeBy: none
+		sourceColumn: IsWeekend
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsORDay
+		dataType: boolean
+		lineageTag: b04ffaa1-aeb5-45db-be52-e9f271c018d4
+		summarizeBy: none
+		sourceColumn: IsORDay
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b549041-98f0-444f-8e94-d3cb5a03a26f
+		summarizeBy: none
+		sourceColumn: FiscalYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalQuarter
+		dataType: int64
+		formatString: 0
+		lineageTag: d562948a-184f-4575-8a0a-6fd40f564b8d
+		summarizeBy: none
+		sourceColumn: FiscalQuarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: 73496623-3803-4473-ae2b-70c736405b12
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\dim_date.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"Date", type date}, {"DateKey", Int64.Type}, {"Year", Int64.Type}, {"Quarter", Int64.Type}, {"Month", Int64.Type}, {"MonthName", type text}, {"MonthShort", type text}, {"Week", Int64.Type}, {"DayOfWeek", Int64.Type}, {"DayName", type text}, {"DayShort", type text}, {"IsWeekend", type logical}, {"IsORDay", type logical}, {"FiscalYear", Int64.Type}, {"FiscalQuarter", Int64.Type}, {"YearMonth", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,27 @@
+table OT_CostRate_INR
+	lineageTag: 91bb1c5f-d21e-4c32-b8ad-0ef8347490a1
+
+	measure 'OT_CostRate_INR Value' = SELECTEDVALUE('OT_CostRate_INR'[OT_CostRate_INR], 2500)
+		formatString: 0
+		lineageTag: 8ba1fe40-6707-4172-8e91-0758c708c17c
+
+	column OT_CostRate_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: f4aaeed3-76c6-45db-a4c4-aadd75f5fc95
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition OT_CostRate_INR = calculated
+		mode: import
+		source = GENERATESERIES(1500, 5000, 250)
+
+	annotation PBI_Id = 1efe1b5a2ee447778e7d54de6ca424d4
+

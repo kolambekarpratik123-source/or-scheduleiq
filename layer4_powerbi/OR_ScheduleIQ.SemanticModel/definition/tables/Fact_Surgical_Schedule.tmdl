@@ -1,0 +1,343 @@
+table Fact_Surgical_Schedule
+	lineageTag: 6b674822-09c8-4bb5-9266-668c30f6cc06
+
+	column case_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d29a41cd-6fd2-44bf-8140-3f865f01f14b
+		summarizeBy: none
+		sourceColumn: case_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column replication
+		dataType: int64
+		formatString: 0
+		lineageTag: 7721707b-37cf-4cca-a81d-b4b8596458c5
+		summarizeBy: none
+		sourceColumn: replication
+
+		annotation SummarizationSetBy = Automatic
+
+	column room_id
+		dataType: string
+		lineageTag: 7da7703b-0bb6-4591-b2a8-7316e94b50d9
+		summarizeBy: none
+		sourceColumn: room_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column procedure_name
+		dataType: string
+		lineageTag: 7b4ccd10-1f35-49d2-955a-82707762850e
+		summarizeBy: none
+		sourceColumn: procedure_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column specialty
+		dataType: string
+		lineageTag: 253bc154-973a-4e53-b10e-bdd04869ea24
+		summarizeBy: none
+		sourceColumn: specialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_id
+		dataType: int64
+		formatString: 0
+		lineageTag: aeb3534f-0fd5-4e6b-8a92-d99c2622d6b0
+		summarizeBy: none
+		sourceColumn: patient_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column asa_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d17b72d-2958-4fd1-9fbd-dfa213c105a5
+		summarizeBy: none
+		sourceColumn: asa_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_tier
+		dataType: string
+		lineageTag: 7edf20ab-f89b-4cf5-82b9-95734384485c
+		summarizeBy: none
+		sourceColumn: risk_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column emergency_flag
+		dataType: boolean
+		lineageTag: 20ef7e5e-4b9e-4ea6-9f41-21b5e6a73e81
+		summarizeBy: none
+		sourceColumn: emergency_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_status
+		dataType: string
+		lineageTag: 7dc3c955-cbac-4208-829d-14dfcb5adfb2
+		summarizeBy: none
+		sourceColumn: case_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column cancellation_reason
+		dataType: string
+		lineageTag: c8ea0484-7345-44cd-8b5f-30916b221904
+		summarizeBy: none
+		sourceColumn: cancellation_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 9042ef76-cb93-4bf1-9411-32ca731ed6f1
+		summarizeBy: none
+		sourceColumn: scheduled_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column scheduled_start_min
+		dataType: int64
+		formatString: 0
+		lineageTag: a9700469-93ba-464c-83ea-30d55d1e2d35
+		summarizeBy: none
+		sourceColumn: scheduled_start_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_end_min
+		dataType: int64
+		formatString: 0
+		lineageTag: cfcc92b9-56e1-4896-90cd-30133c6f6ade
+		summarizeBy: none
+		sourceColumn: scheduled_end_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_start_min
+		dataType: int64
+		formatString: 0
+		lineageTag: bc7bf1d6-61ca-43ec-afaa-842fa627a896
+		summarizeBy: none
+		sourceColumn: actual_start_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_end_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 209241f5-b4e0-42a6-9cf2-02e5133d5da8
+		summarizeBy: none
+		sourceColumn: actual_end_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduled_duration_min
+		dataType: int64
+		formatString: 0
+		lineageTag: cc54c1d9-c62e-47ca-adf8-6fd91b9ede66
+		summarizeBy: none
+		sourceColumn: scheduled_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column actual_duration_min
+		dataType: double
+		lineageTag: 564f373c-12a2-46eb-9e10-35eac66ec67a
+		summarizeBy: sum
+		sourceColumn: actual_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column overrun_min
+		dataType: double
+		lineageTag: 440bdf0b-26af-4f6a-b3fe-81f17640c75b
+		summarizeBy: sum
+		sourceColumn: overrun_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column turnover_min
+		dataType: double
+		lineageTag: 25dae7d1-0e25-410f-9ef1-9121c565a9ac
+		summarizeBy: sum
+		sourceColumn: turnover_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_start_min
+		dataType: int64
+		formatString: 0
+		lineageTag: e15dfd9c-ed1b-4566-8a84-e37e3b9abc98
+		summarizeBy: none
+		sourceColumn: pacu_start_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_end_min
+		dataType: int64
+		formatString: 0
+		lineageTag: bdf76fc8-1ec6-4186-aeff-650a459dae9f
+		summarizeBy: none
+		sourceColumn: pacu_end_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_duration_min
+		dataType: double
+		lineageTag: bcd111b0-3a36-4caa-a80f-d4de84cb71a0
+		summarizeBy: sum
+		sourceColumn: pacu_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_hold_flag
+		dataType: boolean
+		lineageTag: 426172c0-9b1a-4edb-8d00-770490940075
+		summarizeBy: none
+		sourceColumn: pacu_hold_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_transfer_flag
+		dataType: boolean
+		lineageTag: f9c626c3-c632-4021-af16-1431daba2397
+		summarizeBy: none
+		sourceColumn: icu_transfer_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_los_hours
+		dataType: double
+		lineageTag: 2eb914d1-5ea0-4b19-8091-dc35afa58f6d
+		summarizeBy: sum
+		sourceColumn: icu_los_hours
+
+		annotation SummarizationSetBy = Automatic
+
+	column overtime_cost_inr
+		dataType: int64
+		formatString: 0
+		lineageTag: c597328b-0573-4101-a772-ae8aa693c588
+		summarizeBy: none
+		sourceColumn: overtime_cost_inr
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_hold_cost_inr
+		dataType: int64
+		formatString: 0
+		lineageTag: 930b6c9b-9769-492b-9d4e-9abcd040054a
+		summarizeBy: none
+		sourceColumn: pacu_hold_cost_inr
+
+		annotation SummarizationSetBy = Automatic
+
+	column sim_day
+		dataType: int64
+		formatString: 0
+		lineageTag: 0793e2a6-f29f-4b18-843a-bf4f990e002d
+		summarizeBy: none
+		sourceColumn: sim_day
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 237c9bb8-5713-4111-b401-6d759645e3ba
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: int64
+		formatString: 0
+		lineageTag: 1584a44f-0dcc-4087-a1b6-8ecf216aff7f
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: bff60218-f0f1-45e8-8b99-a24ac53a17fc
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 0893adbb-c3c4-4289-bd4a-a74fe5e6c729
+		summarizeBy: none
+		sourceColumn: case_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_year
+		dataType: int64
+		formatString: 0
+		lineageTag: 31e60ee4-35c1-4e09-9d7b-75d6c29d7175
+		summarizeBy: none
+		sourceColumn: case_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column OT_Cost_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: cf83097d-988b-456a-a08f-7b955ec8d2df
+		summarizeBy: none
+		sourceColumn: OT_Cost_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column PACU_HoldCost_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 4f74bb98-0453-4df9-b346-98de88b4891c
+		summarizeBy: none
+		sourceColumn: PACU_HoldCost_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column ICU_Cost_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b84d7b2-26fb-413e-bff8-5d45c316f2fb
+		summarizeBy: none
+		sourceColumn: ICU_Cost_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Duration_Bin_30min = IF( Fact_Surgical_Schedule[case_status] <> "Cancelled", FLOOR( Fact_Surgical_Schedule[actual_duration_min], 30 ) )
+		dataType: double
+		formatString: 0
+		lineageTag: 0c23418e-5b69-4847-a4a0-31d4123be5fa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Surgical_Schedule = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "simulated\fact_simulated_schedule.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"case_id", Int64.Type}, {"replication", Int64.Type}, {"room_id", type text}, {"procedure_name", type text}, {"specialty", type text}, {"patient_id", Int64.Type}, {"asa_score", Int64.Type}, {"risk_tier", type text}, {"emergency_flag", type logical}, {"case_status", type text}, {"cancellation_reason", type text}, {"scheduled_date", type date}, {"scheduled_start_min", Int64.Type}, {"scheduled_end_min", Int64.Type}, {"actual_start_min", Int64.Type}, {"actual_end_min", Int64.Type}, {"scheduled_duration_min", Int64.Type}, {"actual_duration_min", type number}, {"overrun_min", type number}, {"turnover_min", type number}, {"pacu_start_min", Int64.Type}, {"pacu_end_min", Int64.Type}, {"pacu_duration_min", type number}, {"pacu_hold_flag", type logical}, {"icu_transfer_flag", type logical}, {"icu_los_hours", type number}, {"overtime_cost_inr", Int64.Type}, {"pacu_hold_cost_inr", Int64.Type}, {"sim_day", Int64.Type}, {"date_key", Int64.Type}, {"day_of_week", Int64.Type}, {"day_name", type text}, {"case_month", Int64.Type}, {"case_year", Int64.Type}, {"OT_Cost_INR", Int64.Type}, {"PACU_HoldCost_INR", Int64.Type}, {"ICU_Cost_INR", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

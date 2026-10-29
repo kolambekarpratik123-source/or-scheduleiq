@@ -1,0 +1,232 @@
+table duration_fit_parameters
+	lineageTag: f928d180-d5f4-4003-90f3-d5623a8d9efd
+
+	column procedure_name
+		dataType: string
+		lineageTag: 45d3698a-8c1c-4780-a5d9-37ac6e02abd9
+		summarizeBy: none
+		sourceColumn: procedure_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column specialty
+		dataType: string
+		lineageTag: 393bf143-a5bc-405b-9c47-77a6cd70f7f9
+		summarizeBy: none
+		sourceColumn: specialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_cases
+		dataType: int64
+		formatString: 0
+		lineageTag: 036f6b1f-351d-43dc-8703-866a6441b066
+		summarizeBy: none
+		sourceColumn: n_cases
+
+		annotation SummarizationSetBy = Automatic
+
+	column mean_min
+		dataType: double
+		lineageTag: ba4c4c49-035b-433f-8679-4c6dd744170b
+		summarizeBy: sum
+		sourceColumn: mean_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column std_min
+		dataType: double
+		lineageTag: ee69e7db-04b2-4882-b161-365807b9c0c9
+		summarizeBy: sum
+		sourceColumn: std_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column cv_pct
+		dataType: double
+		lineageTag: f75eb5e1-e6f9-47d4-b1e0-626a3332ec95
+		summarizeBy: sum
+		sourceColumn: cv_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column best_fit
+		dataType: string
+		lineageTag: d2a4ca68-3fa4-4fb8-889c-1d68d67f10b5
+		summarizeBy: none
+		sourceColumn: best_fit
+
+		annotation SummarizationSetBy = Automatic
+
+	column lnorm_mu
+		dataType: double
+		lineageTag: b0fc55fd-558c-4efd-af84-18cf64a0098b
+		summarizeBy: sum
+		sourceColumn: lnorm_mu
+
+		annotation SummarizationSetBy = Automatic
+
+	column lnorm_sigma
+		dataType: double
+		lineageTag: 1824029f-4e86-40e1-b908-0f871b27fb69
+		summarizeBy: sum
+		sourceColumn: lnorm_sigma
+
+		annotation SummarizationSetBy = Automatic
+
+	column lnorm_ks_stat
+		dataType: double
+		lineageTag: ddd6fdea-1cb3-40c5-9c93-325401183604
+		summarizeBy: sum
+		sourceColumn: lnorm_ks_stat
+
+		annotation SummarizationSetBy = Automatic
+
+	column lnorm_ks_pval
+		dataType: double
+		lineageTag: fea3f58a-387f-455a-9249-6e1956386f3d
+		summarizeBy: sum
+		sourceColumn: lnorm_ks_pval
+
+		annotation SummarizationSetBy = Automatic
+
+	column lnorm_aic
+		dataType: double
+		lineageTag: 499cacf4-5970-446d-b6a6-8bcf6936a59a
+		summarizeBy: sum
+		sourceColumn: lnorm_aic
+
+		annotation SummarizationSetBy = Automatic
+
+	column weibull_k
+		dataType: double
+		lineageTag: f651b184-0757-4a15-9cfc-caaa959be29c
+		summarizeBy: sum
+		sourceColumn: weibull_k
+
+		annotation SummarizationSetBy = Automatic
+
+	column weibull_lambda
+		dataType: double
+		lineageTag: 50d6e7f6-6fec-4d74-afb5-7412e83c8ccd
+		summarizeBy: sum
+		sourceColumn: weibull_lambda
+
+		annotation SummarizationSetBy = Automatic
+
+	column weibull_ks_stat
+		dataType: double
+		lineageTag: 30ac7b3d-7280-4c42-9f5b-4b6d88bf0e78
+		summarizeBy: sum
+		sourceColumn: weibull_ks_stat
+
+		annotation SummarizationSetBy = Automatic
+
+	column weibull_ks_pval
+		dataType: double
+		lineageTag: 5119a19e-d3e5-47e0-8e9b-adab66e869e4
+		summarizeBy: sum
+		sourceColumn: weibull_ks_pval
+
+		annotation SummarizationSetBy = Automatic
+
+	column weibull_aic
+		dataType: double
+		lineageTag: ae09bb11-ca44-4fbb-8287-71b1e3323dcf
+		summarizeBy: sum
+		sourceColumn: weibull_aic
+
+		annotation SummarizationSetBy = Automatic
+
+	column p10_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 17cc9070-9fa9-4391-98d6-07278693c83e
+		summarizeBy: none
+		sourceColumn: p10_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column p25_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 310c097d-7a8b-4aa7-82ad-fa90ff7d7d41
+		summarizeBy: none
+		sourceColumn: p25_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column p50_min
+		dataType: int64
+		formatString: 0
+		lineageTag: f91c1e80-965d-4658-9192-5b0a4fecc044
+		summarizeBy: none
+		sourceColumn: p50_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column p75_min
+		dataType: int64
+		formatString: 0
+		lineageTag: d8cff475-b562-420e-9671-9046a5b6c2e1
+		summarizeBy: none
+		sourceColumn: p75_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column p90_min
+		dataType: int64
+		formatString: 0
+		lineageTag: ae61b0eb-b248-4bb5-a166-3102a60b3c42
+		summarizeBy: none
+		sourceColumn: p90_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column p95_min
+		dataType: int64
+		formatString: 0
+		lineageTag: de5898fd-ed50-47a5-867e-c2be6736f285
+		summarizeBy: none
+		sourceColumn: p95_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column method
+		dataType: string
+		lineageTag: 8ee6519d-67b6-4256-bf83-a594958c386b
+		summarizeBy: none
+		sourceColumn: method
+
+		annotation SummarizationSetBy = Automatic
+
+	column scheduling_target_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 69f8c831-3c38-4672-974b-b6f4b7a3aea2
+		summarizeBy: none
+		sourceColumn: scheduling_target_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_buffer_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 5fc1e10c-4904-4478-baa2-2d45fa50dcfc
+		summarizeBy: none
+		sourceColumn: risk_buffer_min
+
+		annotation SummarizationSetBy = Automatic
+
+	partition duration_fit_parameters = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\duration_fit_parameters.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"procedure_name", type text}, {"specialty", type text}, {"n_cases", Int64.Type}, {"mean_min", type number}, {"std_min", type number}, {"cv_pct", type number}, {"best_fit", type text}, {"lnorm_mu", type number}, {"lnorm_sigma", type number}, {"lnorm_ks_stat", type number}, {"lnorm_ks_pval", type number}, {"lnorm_aic", type number}, {"weibull_k", type number}, {"weibull_lambda", type number}, {"weibull_ks_stat", type number}, {"weibull_ks_pval", type number}, {"weibull_aic", type number}, {"p10_min", Int64.Type}, {"p25_min", Int64.Type}, {"p50_min", Int64.Type}, {"p75_min", Int64.Type}, {"p90_min", Int64.Type}, {"p95_min", Int64.Type}, {"method", type text}, {"scheduling_target_min", Int64.Type}, {"risk_buffer_min", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

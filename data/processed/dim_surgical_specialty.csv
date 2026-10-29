@@ -1,0 +1,4 @@
+SpecialtyKey,SpecialtyName,Division,AvgComplexity,TypicalICURate
+1,General Surgery,General Surgery,2.8,0.1
+2,Orthopedics,Musculoskeletal,2.5,0.05
+3,Cardiac,Cardiothoracic,4.5,0.55

@@ -1,0 +1,20 @@
+procedure_id,procedure_name,specialty,procedure_category,icd10_code,cpt_code,duration_p10_min,duration_p50_min,duration_p90_min,duration_lognorm_mu,duration_lognorm_sigma,typical_pacu_min,icu_transfer_prob,complexity_score
+PROC-0001,Laparoscopic Cholecystectomy,General Surgery,Laparoscopic,001B00ZZ,47000,35,57,93,4.05,0.38,65,0.1,1
+PROC-0002,Open Appendectomy,General Surgery,Open,002B10ZZ,47010,27,46,80,3.85,0.42,65,0.1,1
+PROC-0003,Laparoscopic Appendectomy,General Surgery,Laparoscopic,003B20ZZ,47020,29,49,82,3.9,0.4,65,0.1,1
+PROC-0004,Laparotomy / Exploratory,General Surgery,Open,004B30ZZ,47030,52,99,188,4.6,0.5,65,0.1,1
+PROC-0005,Inguinal Hernia Repair,General Surgery,Open,005B40ZZ,47040,28,44,70,3.8,0.35,65,0.1,1
+PROC-0006,Laparoscopic Colectomy,General Surgery,Laparoscopic,006B50ZZ,47050,80,148,274,5.0,0.48,65,0.1,2
+PROC-0007,Whipple Procedure,General Surgery,Open,007B60ZZ,47060,243,492,997,6.2,0.55,65,0.1,5
+PROC-0008,Thyroidectomy,General Surgery,Open,008B70ZZ,47070,44,73,123,4.3,0.4,65,0.1,1
+PROC-0009,Total Knee Arthroplasty,Orthopedics,Open,009B80ZZ,47080,63,99,155,4.6,0.35,65,0.05,1
+PROC-0010,Total Hip Arthroplasty,Orthopedics,Open,010B00ZZ,47090,67,109,178,4.7,0.38,65,0.05,1
+PROC-0011,Arthroscopic Knee Surgery,Orthopedics,Open,011B10ZZ,47100,26,44,74,3.8,0.4,65,0.05,1
+PROC-0012,ORIF Femur Fracture,Orthopedics,Open,012B20ZZ,47110,75,134,239,4.9,0.45,65,0.05,2
+PROC-0013,Spinal Fusion (Lumbar),Orthopedics,Open,013B30ZZ,47120,108,200,370,5.3,0.48,65,0.05,2
+PROC-0014,Shoulder Arthroplasty,Orthopedics,Open,014B40ZZ,47130,70,121,208,4.8,0.42,65,0.05,2
+PROC-0015,CABG (On-pump),Cardiac,Open,015B50ZZ,47140,187,365,710,5.9,0.52,65,0.55,5
+PROC-0016,AVR (Aortic Valve Replacement),Cardiac,Open,016B60ZZ,47150,157,298,567,5.7,0.5,65,0.55,4
+PROC-0017,MVR (Mitral Valve Repair),Cardiac,Open,017B70ZZ,47160,163,330,668,5.8,0.55,65,0.55,4
+PROC-0018,Off-pump CABG,Cardiac,Open,018B80ZZ,47170,146,270,500,5.6,0.48,65,0.55,3
+PROC-0019,VATS Lobectomy,Cardiac,Open,019B00ZZ,47180,92,164,292,5.1,0.45,65,0.55,2

@@ -1,0 +1,149 @@
+table sim_daily_metrics
+	lineageTag: 00e9191d-e18c-4708-a2bb-e546407b5bff
+
+	column scheduled_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 9cb55d37-7cec-456e-b772-198f3f58b83b
+		summarizeBy: none
+		sourceColumn: scheduled_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: a6b43ddb-de37-4a87-b69e-2d7c5c7790e9
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cases
+		dataType: int64
+		formatString: 0
+		lineageTag: e1bcf3f5-ebbd-4955-9bfb-fd21c109a62d
+		summarizeBy: none
+		sourceColumn: total_cases
+
+		annotation SummarizationSetBy = Automatic
+
+	column completed_cases
+		dataType: int64
+		formatString: 0
+		lineageTag: a71da6fd-ebb2-45f2-9ab5-bf0a28bc856f
+		summarizeBy: none
+		sourceColumn: completed_cases
+
+		annotation SummarizationSetBy = Automatic
+
+	column cancelled_cases
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f57ce0f-3974-4b49-9cb2-6df4303ac949
+		summarizeBy: none
+		sourceColumn: cancelled_cases
+
+		annotation SummarizationSetBy = Automatic
+
+	column overrun_cases
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f8b6f7f-b29b-49c5-93f5-c30e917689d6
+		summarizeBy: none
+		sourceColumn: overrun_cases
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_overtime_min
+		dataType: double
+		lineageTag: 210a1ccc-9b16-4fea-afb3-60bd5306ba9f
+		summarizeBy: sum
+		sourceColumn: total_overtime_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_duration_min
+		dataType: double
+		lineageTag: 6f0285bd-f0dc-42bf-9a55-5e5938fbfa19
+		summarizeBy: sum
+		sourceColumn: avg_duration_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_holds
+		dataType: int64
+		formatString: 0
+		lineageTag: f79eb94d-8a7a-440e-838d-7cf18e70e1ab
+		summarizeBy: none
+		sourceColumn: pacu_holds
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_transfers
+		dataType: int64
+		formatString: 0
+		lineageTag: fff1d530-68ee-4b7b-ac05-82019befe23f
+		summarizeBy: none
+		sourceColumn: icu_transfers
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_pacu_hold_cost
+		dataType: int64
+		formatString: 0
+		lineageTag: a223db90-48aa-4068-a540-c0dcc3db7274
+		summarizeBy: none
+		sourceColumn: total_pacu_hold_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_overtime_cost
+		dataType: int64
+		formatString: 0
+		lineageTag: f852b0c9-11cf-4291-8a1f-8d2d0ec1d35f
+		summarizeBy: none
+		sourceColumn: total_overtime_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column rooms_in_overtime
+		dataType: int64
+		formatString: 0
+		lineageTag: 66c541ec-9a47-4d40-ac3b-5652f9f549e6
+		summarizeBy: none
+		sourceColumn: rooms_in_overtime
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_cost_inr
+		dataType: int64
+		formatString: 0
+		lineageTag: aeb5ded3-d25e-4047-8cdb-b1791c16ef2b
+		summarizeBy: none
+		sourceColumn: total_cost_inr
+
+		annotation SummarizationSetBy = Automatic
+
+	column utilization_pct
+		dataType: double
+		lineageTag: 7dcddb81-fb9c-44e9-a979-c983066b939b
+		summarizeBy: sum
+		sourceColumn: utilization_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sim_daily_metrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "simulated\sim_daily_metrics.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"scheduled_date", type date}, {"date_key", Int64.Type}, {"total_cases", Int64.Type}, {"completed_cases", Int64.Type}, {"cancelled_cases", Int64.Type}, {"overrun_cases", Int64.Type}, {"total_overtime_min", type number}, {"avg_duration_min", type number}, {"pacu_holds", Int64.Type}, {"icu_transfers", Int64.Type}, {"total_pacu_hold_cost", Int64.Type}, {"total_overtime_cost", Int64.Type}, {"rooms_in_overtime", Int64.Type}, {"total_cost_inr", Int64.Type}, {"utilization_pct", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

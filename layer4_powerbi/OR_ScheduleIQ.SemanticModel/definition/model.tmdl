@@ -1,0 +1,32 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation PBI_QueryOrder = ["DataFolder","Fact_Surgical_Schedule","fact_historical_cases","dim_date","dim_operating_room","dim_surgical_specialty","dim_patient_risk_tier","dim_time_slot","dim_surgeries_master","duration_fit_parameters","sim_hourly_bed_trace","sim_daily_metrics"]
+
+ref table Fact_Surgical_Schedule
+ref table fact_historical_cases
+ref table dim_date
+ref table dim_operating_room
+ref table dim_surgical_specialty
+ref table dim_patient_risk_tier
+ref table dim_time_slot
+ref table dim_surgeries_master
+ref table duration_fit_parameters
+ref table sim_hourly_bed_trace
+ref table sim_daily_metrics
+ref table Buffer_Time_Minutes
+ref table OT_CostRate_INR
+ref table _Measures
+
+ref cultureInfo en-US
+

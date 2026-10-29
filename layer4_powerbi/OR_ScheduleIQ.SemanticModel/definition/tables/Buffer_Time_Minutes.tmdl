@@ -1,0 +1,27 @@
+table Buffer_Time_Minutes
+	lineageTag: 77be4e50-8a86-47e6-9305-31dcc1024c82
+
+	measure 'Buffer_Time_Minutes Value' = SELECTEDVALUE('Buffer_Time_Minutes'[Buffer_Time_Minutes], 30)
+		formatString: 0
+		lineageTag: 737d66f3-bfdb-4f40-abe9-f30fbb36295f
+
+	column Buffer_Time_Minutes
+		dataType: int64
+		formatString: 0
+		lineageTag: 72a41caa-4f38-4fe8-af95-5af5f0ccd5ca
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Buffer_Time_Minutes = calculated
+		mode: import
+		source = GENERATESERIES(15, 60, 5)
+
+	annotation PBI_Id = 65d9d525c9334f9380a613ef4a0dd470
+

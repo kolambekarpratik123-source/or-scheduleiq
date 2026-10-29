@@ -1,0 +1,56 @@
+table dim_surgical_specialty
+	lineageTag: 5ba6ce16-f533-41a6-b2e9-1309eaf3c05d
+
+	column SpecialtyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: bcadd49f-3600-4ae7-bff7-201c9243d91d
+		summarizeBy: none
+		sourceColumn: SpecialtyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SpecialtyName
+		dataType: string
+		lineageTag: e06f511a-3d46-42b6-a680-8d46a822178e
+		summarizeBy: none
+		sourceColumn: SpecialtyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: 35b402fd-946e-4336-bc78-6587f815f1d7
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvgComplexity
+		dataType: double
+		lineageTag: fed052ad-6fdc-4cba-8a1a-60aa86ecaeee
+		summarizeBy: sum
+		sourceColumn: AvgComplexity
+
+		annotation SummarizationSetBy = Automatic
+
+	column TypicalICURate
+		dataType: double
+		lineageTag: a2674d62-e8fc-4295-9711-819935c10a3b
+		summarizeBy: sum
+		sourceColumn: TypicalICURate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_surgical_specialty = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\dim_surgical_specialty.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"SpecialtyKey", Int64.Type}, {"SpecialtyName", type text}, {"Division", type text}, {"AvgComplexity", type number}, {"TypicalICURate", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

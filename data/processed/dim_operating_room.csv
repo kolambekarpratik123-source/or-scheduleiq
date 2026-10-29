@@ -1,0 +1,9 @@
+RoomID,RoomName,PrimarySpecialty,RobotAssisted,CapacityHours,FloorLevel,ActiveFlag
+OR-01,Theatre 1,General Surgery,False,10,1,True
+OR-02,Theatre 2,General Surgery,False,10,1,True
+OR-03,Theatre 3,Orthopedics,False,10,1,True
+OR-04,Theatre 4,Orthopedics,False,10,1,True
+OR-05,Theatre 5,Cardiac,False,10,2,True
+OR-06,Theatre 6,Cardiac,False,10,2,True
+OR-07,Theatre 7,General Surgery,True,10,1,True
+OR-08,Theatre 8,Orthopedics,True,10,1,True

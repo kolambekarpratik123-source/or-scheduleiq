@@ -1,0 +1,32 @@
+relationship 8110258d-a388-4c56-aef0-f2f0d2dd0d10
+	fromColumn: Fact_Surgical_Schedule.date_key
+	toColumn: dim_date.DateKey
+
+relationship e5def882-b5c3-449b-a215-29894c9e60f3
+	fromColumn: Fact_Surgical_Schedule.room_id
+	toColumn: dim_operating_room.RoomID
+
+relationship 3eeff69a-e91c-4a75-a75a-e61d727d5571
+	fromColumn: Fact_Surgical_Schedule.specialty
+	toColumn: dim_surgical_specialty.SpecialtyName
+
+relationship 55749e81-9b44-419b-a20b-2b5abc9f8d46
+	fromColumn: Fact_Surgical_Schedule.risk_tier
+	toColumn: dim_patient_risk_tier.RiskTierName
+
+relationship 054ddfa9-d23b-43e9-882f-40783d290f4e
+	fromColumn: fact_historical_cases.date_key
+	toColumn: dim_date.DateKey
+
+relationship d8707cf1-abb0-4d07-ba59-4dc8300db905
+	fromColumn: fact_historical_cases.specialty
+	toColumn: dim_surgical_specialty.SpecialtyName
+
+relationship bbd67185-55c5-44ac-a295-a12a92de426a
+	fromColumn: fact_historical_cases.risk_tier
+	toColumn: dim_patient_risk_tier.RiskTierName
+
+relationship c5df582a-72f8-4c80-bd0b-2abf9ea342f8
+	fromColumn: sim_daily_metrics.date_key
+	toColumn: dim_date.DateKey
+

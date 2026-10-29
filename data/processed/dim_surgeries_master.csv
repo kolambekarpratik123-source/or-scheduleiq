@@ -1,0 +1,20 @@
+procedure_id,procedure_name,specialty,procedure_category,icd10_code,cpt_code,complexity_score,typical_pacu_min,icu_transfer_prob,ref_p10_min,ref_p50_min,ref_p90_min,hist_p10_min,hist_p50_min,hist_p90_min,hist_lognorm_mu,hist_lognorm_sigma,hist_mean_min,hist_stddev_min,duration_cv_pct,historical_case_count,overrun_rate_pct,duration_risk_tier,effective_p10_min,effective_p50_min,effective_p90_min,effective_lognorm_mu,effective_lognorm_sigma,exported_date
+PROC-0015,CABG (On-pump),Cardiac,Open,015B50ZZ,47140,5,65,0.5500,187,365,710,151.8,315.0,467.0,5.5648,0.5229,290.7,129.2,44.46,9,22.22,High,151.8,315.0,467.0,5.5648,0.5229,2026-10-27
+PROC-0016,AVR (Aortic Valve Replacement),Cardiac,Open,016B60ZZ,47150,4,65,0.5500,157,298,567,,,,,,,,,,,,157.0,298.0,567.0,5.7,0.5,2026-10-27
+PROC-0017,MVR (Mitral Valve Repair),Cardiac,Open,017B70ZZ,47160,4,65,0.5500,163,330,668,180.0,232.0,377.8,5.4759,0.3612,252.3,85.8,33.99,9,22.22,Medium,180.0,232.0,377.8,5.4759,0.3612,2026-10-27
+PROC-0018,Off-pump CABG,Cardiac,Open,018B80ZZ,47170,3,65,0.5500,146,270,500,159.6,261.0,315.2,5.4827,0.2897,249.1,61.4,24.63,17,23.53,Medium,159.6,261.0,315.2,5.4827,0.2897,2026-10-27
+PROC-0019,VATS Lobectomy,Cardiac,Open,019B00ZZ,47180,2,65,0.5500,92,164,292,56.4,130.0,189.8,4.7174,0.47,122.8,51.8,42.14,13,23.08,High,56.4,130.0,189.8,4.7174,0.47,2026-10-27
+PROC-0007,Whipple Procedure,General Surgery,Open,007B60ZZ,47060,5,65,0.1000,243,492,997,164.2,275.0,437.0,5.604,0.4385,294.8,122.7,41.61,9,22.22,High,164.2,275.0,437.0,5.604,0.4385,2026-10-27
+PROC-0006,Laparoscopic Colectomy,General Surgery,Laparoscopic,006B50ZZ,47050,2,65,0.1000,80,148,274,79.4,110.0,157.8,4.7132,0.2815,115.6,32.2,27.81,17,23.53,Medium,79.4,110.0,157.8,4.7132,0.2815,2026-10-27
+PROC-0005,Inguinal Hernia Repair,General Surgery,Open,005B40ZZ,47040,1,65,0.1000,28,44,70,26.8,41.0,51.2,3.675,0.2495,40.6,9.3,23.02,29,20.69,Medium,26.8,41.0,51.2,3.675,0.2495,2026-10-27
+PROC-0003,Laparoscopic Appendectomy,General Surgery,Laparoscopic,003B20ZZ,47020,1,65,0.1000,29,49,82,25.3,41.5,55.9,3.6572,0.3211,40.6,12.1,29.71,22,22.73,Medium,25.3,41.5,55.9,3.6572,0.3211,2026-10-27
+PROC-0001,Laparoscopic Cholecystectomy,General Surgery,Laparoscopic,001B00ZZ,47000,1,65,0.1000,35,57,93,41.3,55.5,65.0,3.9727,0.2058,54.2,10.4,19.25,24,20.83,Low,41.3,55.5,65.0,3.9727,0.2058,2026-10-27
+PROC-0004,Laparotomy / Exploratory,General Surgery,Open,004B30ZZ,47030,1,65,0.1000,52,99,188,54.1,87.0,119.7,4.422,0.3268,87.4,26.3,30.1,22,27.27,Medium,54.1,87.0,119.7,4.422,0.3268,2026-10-27
+PROC-0002,Open Appendectomy,General Surgery,Open,002B10ZZ,47010,1,65,0.1000,27,46,80,21.9,34.5,52.1,3.5589,0.3307,36.9,11.4,30.85,30,23.33,Medium,21.9,34.5,52.1,3.5589,0.3307,2026-10-27
+PROC-0008,Thyroidectomy,General Surgery,Open,008B70ZZ,47070,1,65,0.1000,44,73,123,41.9,64.0,86.8,4.106,0.3192,63.5,18.5,29.11,30,26.67,Medium,41.9,64.0,86.8,4.106,0.3192,2026-10-27
+PROC-0012,ORIF Femur Fracture,Orthopedics,Open,012B20ZZ,47110,2,65,0.0500,75,134,239,56.8,109.0,154.1,4.5884,0.3906,105.4,37.1,35.16,40,25.0,High,56.8,109.0,154.1,4.5884,0.3906,2026-10-27
+PROC-0014,Shoulder Arthroplasty,Orthopedics,Open,014B40ZZ,47130,2,65,0.0500,70,121,208,64.4,103.0,136.6,4.5606,0.3069,99.8,27.9,27.92,25,20.0,Medium,64.4,103.0,136.6,4.5606,0.3069,2026-10-27
+PROC-0013,Spinal Fusion (Lumbar),Orthopedics,Open,013B30ZZ,47120,2,65,0.0500,108,200,370,116.8,170.0,236.2,5.0791,0.3325,168.4,49.0,29.11,23,26.09,Medium,116.8,170.0,236.2,5.0791,0.3325,2026-10-27
+PROC-0011,Arthroscopic Knee Surgery,Orthopedics,Open,011B10ZZ,47100,1,65,0.0500,26,44,74,24.2,37.0,49.4,3.5455,0.313,36.2,10.2,28.22,33,21.21,Medium,24.2,37.0,49.4,3.5455,0.313,2026-10-27
+PROC-0010,Total Hip Arthroplasty,Orthopedics,Open,010B00ZZ,47090,1,65,0.0500,67,109,178,72.4,97.0,116.0,4.5257,0.2179,94.4,19.3,20.5,19,26.32,Medium,72.4,97.0,116.0,4.5257,0.2179,2026-10-27
+PROC-0009,Total Knee Arthroplasty,Orthopedics,Open,009B80ZZ,47080,1,65,0.0500,63,99,155,59.0,96.5,120.2,4.4828,0.2697,91.5,22.7,24.86,28,25.0,Medium,59.0,96.5,120.2,4.4828,0.2697,2026-10-27

@@ -1,0 +1,66 @@
+table dim_time_slot
+	lineageTag: a38c0ca1-d5b0-40a8-86c6-23ad7470fea0
+
+	column TimeSlotKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a03682c-0fa7-42ae-8a0a-44e7c6bcea47
+		summarizeBy: none
+		sourceColumn: TimeSlotKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimeLabel
+		dataType: string
+		lineageTag: 0620f2f7-7032-4d3b-968f-bc05c82c9b25
+		summarizeBy: none
+		sourceColumn: TimeLabel
+
+		annotation SummarizationSetBy = Automatic
+
+	column HourOfDay
+		dataType: int64
+		formatString: 0
+		lineageTag: a248e5ce-bbc3-4bfb-bef0-4fd95fbc80af
+		summarizeBy: none
+		sourceColumn: HourOfDay
+
+		annotation SummarizationSetBy = Automatic
+
+	column MinuteOfHour
+		dataType: int64
+		formatString: 0
+		lineageTag: da9e1364-6a05-4f28-adb6-e399f49c6d2b
+		summarizeBy: none
+		sourceColumn: MinuteOfHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column TimePeriod
+		dataType: string
+		lineageTag: 98eeb206-a578-4bb6-a6ba-334851d0f1c3
+		summarizeBy: none
+		sourceColumn: TimePeriod
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsORHour
+		dataType: boolean
+		lineageTag: 5358bc4e-5099-4586-ba2e-e3dbd68cb341
+		summarizeBy: none
+		sourceColumn: IsORHour
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_time_slot = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\dim_time_slot.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"TimeSlotKey", Int64.Type}, {"TimeLabel", type text}, {"HourOfDay", Int64.Type}, {"MinuteOfHour", Int64.Type}, {"TimePeriod", type text}, {"IsORHour", type logical}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

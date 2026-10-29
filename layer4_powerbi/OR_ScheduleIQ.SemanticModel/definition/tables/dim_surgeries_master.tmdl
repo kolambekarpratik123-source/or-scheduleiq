@@ -1,0 +1,256 @@
+table dim_surgeries_master
+	lineageTag: 32b88d75-3bee-4c5f-a0c0-7f30f3f31074
+
+	column procedure_id
+		dataType: string
+		lineageTag: ec53bfc8-77b0-4814-9d71-e059a81aa9d7
+		summarizeBy: none
+		sourceColumn: procedure_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column procedure_name
+		dataType: string
+		lineageTag: f61189d5-3956-44c2-8d44-d5b9e25f1b6e
+		summarizeBy: none
+		sourceColumn: procedure_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column specialty
+		dataType: string
+		lineageTag: 8829af02-561c-41d7-a791-3e7b38ed7e67
+		summarizeBy: none
+		sourceColumn: specialty
+
+		annotation SummarizationSetBy = Automatic
+
+	column procedure_category
+		dataType: string
+		lineageTag: 5f50121d-0e74-4758-b42f-4483398fa6c0
+		summarizeBy: none
+		sourceColumn: procedure_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column icd10_code
+		dataType: string
+		lineageTag: 3e8f85fb-5a54-4c74-8ff5-2020e873c696
+		summarizeBy: none
+		sourceColumn: icd10_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column cpt_code
+		dataType: int64
+		formatString: 0
+		lineageTag: 163ba6f1-7c6a-426c-83e9-bf1c4d93795f
+		summarizeBy: none
+		sourceColumn: cpt_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column complexity_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c684239-f903-4c2f-bd2d-651c50ed9e08
+		summarizeBy: none
+		sourceColumn: complexity_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column typical_pacu_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 000c3bde-49d9-49ed-86f9-fc48b1c16beb
+		summarizeBy: none
+		sourceColumn: typical_pacu_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_transfer_prob
+		dataType: double
+		lineageTag: c8f5f8c0-8616-4411-a781-57e841b0e20e
+		summarizeBy: sum
+		sourceColumn: icu_transfer_prob
+
+		annotation SummarizationSetBy = Automatic
+
+	column ref_p10_min
+		dataType: int64
+		formatString: 0
+		lineageTag: dbc1262c-84f5-4cd4-b3f0-352ea1428b88
+		summarizeBy: none
+		sourceColumn: ref_p10_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column ref_p50_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 5614cf4c-9da0-42d2-be67-704aab76b975
+		summarizeBy: none
+		sourceColumn: ref_p50_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column ref_p90_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 12562f88-3c1c-441a-8abd-4f47632df1c8
+		summarizeBy: none
+		sourceColumn: ref_p90_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_p10_min
+		dataType: double
+		lineageTag: d6c9bf5a-c3ea-48fd-80e2-794e9ef69997
+		summarizeBy: sum
+		sourceColumn: hist_p10_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_p50_min
+		dataType: double
+		lineageTag: a28a9649-917e-4e14-917e-b4bb1d8e4c23
+		summarizeBy: sum
+		sourceColumn: hist_p50_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_p90_min
+		dataType: double
+		lineageTag: cb881c0c-c9cc-4cac-b964-c925def4eb33
+		summarizeBy: sum
+		sourceColumn: hist_p90_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_lognorm_mu
+		dataType: double
+		lineageTag: c765f515-290e-441f-84c7-ce04664f5372
+		summarizeBy: sum
+		sourceColumn: hist_lognorm_mu
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_lognorm_sigma
+		dataType: double
+		lineageTag: 7ab10d8d-7b1a-4641-a340-7aff2f529955
+		summarizeBy: sum
+		sourceColumn: hist_lognorm_sigma
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_mean_min
+		dataType: double
+		lineageTag: f6b6f166-8a75-437d-b3d3-9fd7b20dd8b1
+		summarizeBy: sum
+		sourceColumn: hist_mean_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column hist_stddev_min
+		dataType: double
+		lineageTag: bb958870-197b-47fe-969b-be114cee2ceb
+		summarizeBy: sum
+		sourceColumn: hist_stddev_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration_cv_pct
+		dataType: double
+		lineageTag: bacc5d67-0ed4-4de9-85f3-ffbeb647284c
+		summarizeBy: sum
+		sourceColumn: duration_cv_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column historical_case_count
+		dataType: double
+		lineageTag: 3a91d00a-b04a-4c81-abfe-ed06534a6524
+		summarizeBy: sum
+		sourceColumn: historical_case_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column overrun_rate_pct
+		dataType: double
+		lineageTag: 3ff5905e-0bd4-4629-9e25-b5f69a4e7eb2
+		summarizeBy: sum
+		sourceColumn: overrun_rate_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column duration_risk_tier
+		dataType: string
+		lineageTag: 7d319be0-505a-4ddc-8b84-7ade0a7fdfe4
+		summarizeBy: none
+		sourceColumn: duration_risk_tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_p10_min
+		dataType: double
+		lineageTag: 09eaa40b-8ecc-4855-892b-3208ae492dc3
+		summarizeBy: sum
+		sourceColumn: effective_p10_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_p50_min
+		dataType: double
+		lineageTag: 26cdc4f5-73f4-421e-92f0-61b8f8daa69a
+		summarizeBy: sum
+		sourceColumn: effective_p50_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_p90_min
+		dataType: double
+		lineageTag: 14de0532-cdac-47c4-bc02-d267e74e5a10
+		summarizeBy: sum
+		sourceColumn: effective_p90_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_lognorm_mu
+		dataType: double
+		lineageTag: 49f34b30-5aa5-46f8-9145-f97e814f5d0f
+		summarizeBy: sum
+		sourceColumn: effective_lognorm_mu
+
+		annotation SummarizationSetBy = Automatic
+
+	column effective_lognorm_sigma
+		dataType: double
+		lineageTag: 11837beb-ff8c-4c83-a588-61ff323ff1ef
+		summarizeBy: sum
+		sourceColumn: effective_lognorm_sigma
+
+		annotation SummarizationSetBy = Automatic
+
+	column exported_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 1a1bba41-8d5d-4a24-9eda-8800b3123d01
+		summarizeBy: none
+		sourceColumn: exported_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_surgeries_master = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "processed\dim_surgeries_master.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"procedure_id", type text}, {"procedure_name", type text}, {"specialty", type text}, {"procedure_category", type text}, {"icd10_code", type text}, {"cpt_code", Int64.Type}, {"complexity_score", Int64.Type}, {"typical_pacu_min", Int64.Type}, {"icu_transfer_prob", type number}, {"ref_p10_min", Int64.Type}, {"ref_p50_min", Int64.Type}, {"ref_p90_min", Int64.Type}, {"hist_p10_min", type number}, {"hist_p50_min", type number}, {"hist_p90_min", type number}, {"hist_lognorm_mu", type number}, {"hist_lognorm_sigma", type number}, {"hist_mean_min", type number}, {"hist_stddev_min", type number}, {"duration_cv_pct", type number}, {"historical_case_count", type number}, {"overrun_rate_pct", type number}, {"duration_risk_tier", type text}, {"effective_p10_min", type number}, {"effective_p50_min", type number}, {"effective_p90_min", type number}, {"effective_lognorm_mu", type number}, {"effective_lognorm_sigma", type number}, {"exported_date", type date}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,204 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1414.73738123233,
+            "y": 305.5975341196721
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "d0e62c15-c1ed-4559-8136-62401bb6d911",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1698.73738123233,
+            "y": 343.5975341196721
+          },
+          "nodeIndex": "Buffer_Time_Minutes",
+          "nodeLineageTag": "77be4e50-8a86-47e6-9305-31dcc1024c82",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.24107129758607,
+            "y": 297.05150160524727
+          },
+          "nodeIndex": "dim_date",
+          "nodeLineageTag": "827484eb-627c-42be-a514-0940f29a76ec",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1180.73738123233,
+            "y": 613.19506823934421
+          },
+          "nodeIndex": "dim_operating_room",
+          "nodeLineageTag": "8cd55eea-ca6b-4f34-9107-fc284f55ce5a",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 893.335225545886,
+            "y": 654.754060755201
+          },
+          "nodeIndex": "dim_patient_risk_tier",
+          "nodeLineageTag": "f5662185-1925-45f5-b48e-f7536815b2e8",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1982.73738123233,
+            "y": 305.5975341196721
+          },
+          "nodeIndex": "dim_surgeries_master",
+          "nodeLineageTag": "32b88d75-3bee-4c5f-a0c0-7f30f3f31074",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 971.77502996959561,
+            "y": 50.483028582343763
+          },
+          "nodeIndex": "dim_surgical_specialty",
+          "nodeLineageTag": "5ba6ce16-f533-41a6-b2e9-1309eaf3c05d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2266.7373812323303,
+            "y": 343.5975341196721
+          },
+          "nodeIndex": "dim_time_slot",
+          "nodeLineageTag": "a38c0ca1-d5b0-40a8-86c6-23ad7470fea0",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2550.7373812323303,
+            "y": 305.5975341196721
+          },
+          "nodeIndex": "duration_fit_parameters",
+          "nodeLineageTag": "f928d180-d5f4-4003-90f3-d5623a8d9efd",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 621.21493550532887,
+            "y": -50
+          },
+          "nodeIndex": "fact_historical_cases",
+          "nodeLineageTag": "3585d0a0-c17d-408d-8085-9e06468470c6",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 893.71855387460914,
+            "y": 303.71051177326166
+          },
+          "nodeIndex": "Fact_Surgical_Schedule",
+          "nodeLineageTag": "6b674822-09c8-4bb5-9266-668c30f6cc06",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2834.7373812323303,
+            "y": 343.5975341196721
+          },
+          "nodeIndex": "OT_CostRate_INR",
+          "nodeLineageTag": "91bb1c5f-d21e-4c32-b8ad-0ef8347490a1",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 319.07710368602181
+          },
+          "nodeIndex": "sim_daily_metrics",
+          "nodeLineageTag": "00e9191d-e18c-4708-a2bb-e546407b5bff",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3118.7373812323303,
+            "y": 305.5975341196721
+          },
+          "nodeIndex": "sim_hourly_bed_trace",
+          "nodeLineageTag": "60a13712-6abd-46ac-8a69-bc3f7ec2eb7c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

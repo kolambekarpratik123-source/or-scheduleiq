@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.vscode/
+# DuckDB file is rebuilt by the pipeline
+data/*.duckdb
+data/*.duckdb.wal
+# Power BI local cache and per-user settings
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+*.pbix.bak

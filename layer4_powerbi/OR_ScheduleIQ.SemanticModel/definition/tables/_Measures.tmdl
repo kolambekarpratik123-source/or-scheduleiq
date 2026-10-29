@@ -1,0 +1,470 @@
+table _Measures
+	lineageTag: d0e62c15-c1ed-4559-8136-62401bb6d911
+
+	measure Total_Cases = COUNTROWS( Fact_Surgical_Schedule )
+		lineageTag: b756803e-c954-4b12-b94f-a40656e1e505
+
+	measure Completed_Cases =
+			CALCULATE(
+			    COUNTROWS( Fact_Surgical_Schedule ),
+			    Fact_Surgical_Schedule[case_status] = "Completed"
+			)
+		lineageTag: 5d0842f8-5e6e-4946-a4a0-12cc7c981edb
+
+	measure Cancelled_Cases =
+			CALCULATE(
+			    COUNTROWS( Fact_Surgical_Schedule ),
+			    Fact_Surgical_Schedule[case_status] = "Cancelled"
+			)
+		lineageTag: 54db1207-b01a-4ece-9986-83af42e67a2b
+
+	measure Emergency_Cases =
+			CALCULATE(
+			    COUNTROWS( Fact_Surgical_Schedule ),
+			    Fact_Surgical_Schedule[emergency_flag] = TRUE()
+			)
+		lineageTag: f93d0217-5e3f-43ae-a3e0-4157321ebb8e
+
+	measure Total_Scheduled_Hours =
+			DIVIDE(
+			    SUMX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[scheduled_duration_min] ),
+			    60
+			)
+		formatString: #,##0
+		lineageTag: ae4f638e-aa84-430e-b4fc-1f138f63b56a
+
+	measure Total_Actual_Hours =
+			DIVIDE(
+			    SUMX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[actual_duration_min] ),
+			    60
+			)
+		formatString: #,##0
+		lineageTag: 1dc538af-9123-444d-a36e-0f7c2714031b
+
+	measure OR_Utilization_Pct =
+			VAR TotalActualMin =
+			    SUMX(
+			        Fact_Surgical_Schedule,
+			        IF(
+			            Fact_Surgical_Schedule[case_status] <> "Cancelled",
+			            Fact_Surgical_Schedule[actual_duration_min],
+			            0
+			        )
+			    )
+			VAR DistinctDays = DISTINCTCOUNT( Fact_Surgical_Schedule[date_key] )
+			VAR NumRooms     = DISTINCTCOUNT( Fact_Surgical_Schedule[room_id] )
+			VAR AvailableMin = NumRooms * DistinctDays * 600
+			RETURN ROUND( DIVIDE( TotalActualMin, AvailableMin, 0 ), 4 )
+		formatString: 0.0%
+		lineageTag: 0fac9826-faf9-4a96-97ce-1c78688f9b5f
+
+	measure OR_Utilization_Pct_ByRoom =
+			VAR TotalActualMin =
+			    SUMX(
+			        Fact_Surgical_Schedule,
+			        IF(
+			            Fact_Surgical_Schedule[case_status] <> "Cancelled",
+			            Fact_Surgical_Schedule[actual_duration_min],
+			            0
+			        )
+			    )
+			VAR DistinctDays = DISTINCTCOUNT( Fact_Surgical_Schedule[date_key] )
+			VAR AvailableMin = DistinctDays * 600
+			RETURN ROUND( DIVIDE( TotalActualMin, AvailableMin, 0 ), 4 )
+		formatString: 0.0%
+		lineageTag: 4036e02c-3c08-460a-8aea-c51689f3dc8b
+
+	measure Target_Utilization_Band =
+			VAR Util = [OR_Utilization_Pct]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Util >= 1.00, "OVERTIME",
+			        Util >= 0.85, "BUFFER BREACH",
+			        Util >= 0.70, "ON TRACK",
+			        "UNDERUTILIZED"
+			    )
+		lineageTag: 111896c3-4382-4b45-91e7-5d404dac3ccb
+
+	measure Total_Overtime_Minutes = SUMX( Fact_Surgical_Schedule, MAX( 0, Fact_Surgical_Schedule[overrun_min] ) )
+		formatString: #,##0
+		lineageTag: 943c8ff9-1f6f-44d9-95da-16af301fb106
+
+	measure Total_Overtime_Hours = DIVIDE( [Total_Overtime_Minutes], 60 )
+		formatString: 0.0
+		lineageTag: f0c23578-ecef-49fc-98ed-2965df58a637
+
+	measure Rooms_With_Overtime =
+			CALCULATE(
+			    DISTINCTCOUNT( Fact_Surgical_Schedule[room_id] ),
+			    Fact_Surgical_Schedule[overrun_min] > 0
+			)
+		lineageTag: 059aadd0-546c-42c1-bb15-de041ad37ce4
+
+	measure Projected_Overtime_Cost_INR =
+			VAR BufferMin   = [Buffer_Time_Minutes Value]
+			VAR CostPerHour = [OT_CostRate_INR Value]
+			VAR OvertimeMinutes =
+			    SUMX(
+			        Fact_Surgical_Schedule,
+			        MAX(
+			            0,
+			            Fact_Surgical_Schedule[actual_duration_min]
+			                - Fact_Surgical_Schedule[scheduled_duration_min]
+			                - BufferMin
+			        )
+			    )
+			VAR OvertimeHours = DIVIDE( OvertimeMinutes, 60 )
+			RETURN ROUND( OvertimeHours * CostPerHour, 0 )
+		formatString: #,##0
+		lineageTag: 582d471a-9455-4b10-976d-f21ae1010d5e
+
+	measure OT_Cost_vs_Baseline_INR =
+			VAR BaselineCost =
+			    CALCULATE(
+			        [Projected_Overtime_Cost_INR],
+			        'Buffer_Time_Minutes'[Buffer_Time_Minutes] = 30
+			    )
+			RETURN BaselineCost - [Projected_Overtime_Cost_INR]
+		formatString: #,##0
+		lineageTag: 78e2a2cd-4288-45a3-a862-0450d8edeec6
+
+	measure Overtime_Alert_Color =
+			VAR OT = [Total_Overtime_Hours]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        OT > 8,  "#DC2626",
+			        OT > 3,  "#D97706",
+			        OT > 0,  "#F59E0B",
+			        "#059669"
+			    )
+		lineageTag: 172abbb4-9c65-4ded-9c36-23b1d2478fc8
+
+	measure Case_Cancellation_Rate_Pct = DIVIDE( [Cancelled_Cases], [Total_Cases], 0 )
+		formatString: 0.0%
+		lineageTag: 9ec67836-efa5-41c0-b612-78c16b0286a2
+
+	measure Predicted_Cancellation_Risk_Pct =
+			VAR AvgASA =
+			    AVERAGEX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[asa_score] )
+			VAR EmergencyRate =
+			    DIVIDE( [Emergency_Cases], [Total_Cases], 0 )
+			VAR HighRiskRate =
+			    DIVIDE(
+			        CALCULATE(
+			            COUNTROWS( Fact_Surgical_Schedule ),
+			            Fact_Surgical_Schedule[risk_tier] IN { "High", "Critical" }
+			        ),
+			        [Total_Cases],
+			        0
+			    )
+			RETURN
+			    ROUND(
+			        0.03 + 0.015 * (AvgASA - 2) + 0.12 * EmergencyRate + 0.08 * HighRiskRate,
+			        4
+			    )
+		formatString: 0.0%
+		lineageTag: 1a983937-cff5-422b-825d-be90f604d543
+
+	measure Total_PACU_Holds =
+			CALCULATE(
+			    COUNTROWS( Fact_Surgical_Schedule ),
+			    Fact_Surgical_Schedule[pacu_hold_flag] = TRUE()
+			)
+		lineageTag: 42ee89b0-1aa7-4a2e-9568-dec1f990b5fa
+
+	measure PACU_Hold_Rate_Pct = DIVIDE( [Total_PACU_Holds], [Total_Cases], 0 )
+		formatString: 0.0%
+		lineageTag: 0c170d2d-f748-4262-8f84-6219c5aecfea
+
+	measure Avg_PACU_Duration_min =
+			AVERAGEX(
+			    FILTER(
+			        Fact_Surgical_Schedule,
+			        NOT ISBLANK( Fact_Surgical_Schedule[pacu_duration_min] )
+			            && Fact_Surgical_Schedule[case_status] <> "Cancelled"
+			    ),
+			    Fact_Surgical_Schedule[pacu_duration_min]
+			)
+		formatString: 0.0
+		lineageTag: b85f283b-b503-47f7-a849-02f2d683ed17
+
+	measure PACU_Hold_Time_Hours =
+			DIVIDE(
+			    SUMX(
+			        FILTER( Fact_Surgical_Schedule, Fact_Surgical_Schedule[pacu_hold_flag] = TRUE() ),
+			        MAX( 0, Fact_Surgical_Schedule[pacu_duration_min] - 90 )
+			    ),
+			    60
+			)
+		formatString: 0.0
+		lineageTag: a098f3a3-c416-4bf3-9723-dacefe125464
+
+	measure PACU_Total_Hold_Cost_INR = SUMX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[PACU_HoldCost_INR] )
+		formatString: #,##0
+		lineageTag: 3779c429-87ca-423f-b9cf-7322bdd23575
+
+	measure Total_ICU_Transfers =
+			CALCULATE(
+			    COUNTROWS( Fact_Surgical_Schedule ),
+			    Fact_Surgical_Schedule[icu_transfer_flag] = TRUE()
+			)
+		lineageTag: 16d3c916-9254-4cb9-a704-f4e53bb54a2f
+
+	measure ICU_Transfer_Rate_Pct = DIVIDE( [Total_ICU_Transfers], [Completed_Cases], 0 )
+		formatString: 0.0%
+		lineageTag: a53f4906-72bc-4b1f-a0c8-348264336081
+
+	measure Avg_ICU_LOS_Hours =
+			AVERAGEX(
+			    FILTER(
+			        Fact_Surgical_Schedule,
+			        Fact_Surgical_Schedule[icu_transfer_flag] = TRUE()
+			            && NOT ISBLANK( Fact_Surgical_Schedule[icu_los_hours] )
+			    ),
+			    Fact_Surgical_Schedule[icu_los_hours]
+			)
+		formatString: 0.0
+		lineageTag: 7a10189b-05a7-4ecb-ae2f-ccaabd96b76b
+
+	measure Peak_ICU_Bed_Demand =
+			VAR ICUTransfers  = [Total_ICU_Transfers]
+			VAR AvgLOS        = [Avg_ICU_LOS_Hours]
+			VAR WorkingDays   = DISTINCTCOUNT( Fact_Surgical_Schedule[date_key] )
+			VAR DailyArrivals = DIVIDE( ICUTransfers, WorkingDays, 0 )
+			VAR AvgOccupancy  = DailyArrivals * DIVIDE( AvgLOS, 24, 0 )
+			RETURN ROUND( AvgOccupancy * 1.5, 0 )
+		formatString: 0
+		lineageTag: dbc4878f-050d-4655-b186-6e785225ee88
+
+	measure ICU_Bed_Saturation_Risk =
+			VAR PeakDemand = [Peak_ICU_Bed_Demand]
+			VAR TotalBeds  = 16
+			RETURN ROUND( DIVIDE( PeakDemand, TotalBeds, 0 ), 4 )
+		formatString: 0.0%
+		lineageTag: 4a27c9ca-15bc-4b6b-9f50-9274c1f51705
+
+	measure ICU_Saturation_Label =
+			VAR Sat = [ICU_Bed_Saturation_Risk]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Sat >= 0.95, "CRITICAL - Immediate Action Required",
+			        Sat >= 0.80, "HIGH - ICU Block Risk Active",
+			        Sat >= 0.60, "MODERATE - Monitor Closely",
+			        "NORMAL - Within Safe Operating Range"
+			    )
+		lineageTag: 4cdd3d60-d49c-4db9-82f4-91246d91a441
+
+	measure ICU_Saturation_Color =
+			VAR Sat = [ICU_Bed_Saturation_Risk]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        Sat >= 0.95, "#DC2626",
+			        Sat >= 0.80, "#EA580C",
+			        Sat >= 0.60, "#D97706",
+			        "#059669"
+			    )
+		lineageTag: b96389ba-f226-4882-b50f-653e17400485
+
+	measure Total_ICU_Bed_Cost_INR =
+			SUMX(
+			    FILTER(
+			        Fact_Surgical_Schedule,
+			        Fact_Surgical_Schedule[icu_transfer_flag] = TRUE()
+			    ),
+			    Fact_Surgical_Schedule[icu_los_hours] * 3500
+			)
+		formatString: #,##0
+		lineageTag: 975effa7-0e9f-490f-bbfc-40e6782881e7
+
+	measure Dynamic_Turnover_Buffer = [Buffer_Time_Minutes Value]
+		lineageTag: 210bf678-3db2-4b1c-9050-8de796169710
+
+	measure Adjusted_Cases_Per_Room_Per_Day =
+			VAR BufferMin  = [Buffer_Time_Minutes Value]
+			VAR AvgProcMin = AVERAGEX(
+			                    Fact_Surgical_Schedule,
+			                    Fact_Surgical_Schedule[scheduled_duration_min]
+			                 )
+			VAR SlotSize   = AvgProcMin + BufferMin
+			RETURN FLOOR( DIVIDE( 600, SlotSize, 0 ), 1 )
+		lineageTag: ee1fd837-1195-4d9c-bd1f-fc9453a9fe9e
+
+	measure Buffer_Efficiency_Rate_Pct =
+			VAR BufferMin = [Buffer_Time_Minutes Value]
+			VAR AvgActualTurnover =
+			    AVERAGEX(
+			        FILTER(
+			            Fact_Surgical_Schedule,
+			            NOT ISBLANK( Fact_Surgical_Schedule[turnover_min] )
+			        ),
+			        Fact_Surgical_Schedule[turnover_min]
+			    )
+			RETURN ROUND( DIVIDE( AvgActualTurnover, BufferMin, 0 ), 4 )
+		formatString: 0.0%
+		lineageTag: 3a86aefb-8525-436c-80c5-4e3baeee01e7
+
+	measure Wasted_Buffer_Hours =
+			VAR BufferMin = [Buffer_Time_Minutes Value]
+			VAR AvgActualTurnover =
+			    AVERAGEX(
+			        FILTER(
+			            Fact_Surgical_Schedule,
+			            NOT ISBLANK( Fact_Surgical_Schedule[turnover_min] )
+			        ),
+			        Fact_Surgical_Schedule[turnover_min]
+			    )
+			VAR WastedMin = MAX( 0, BufferMin - AvgActualTurnover ) * [Total_Cases]
+			RETURN ROUND( DIVIDE( WastedMin, 60 ), 1 )
+		formatString: 0.0
+		lineageTag: 0093fa29-61ee-4f4e-bcfe-1a5686f3d991
+
+	measure Cases_MTD = CALCULATE( [Total_Cases], DATESMTD( dim_date[Date] ) )
+		lineageTag: ab273bcb-06c1-4dea-ac2f-2608e5a6e4b1
+
+	measure OT_Cost_WoW_Change_Pct =
+			VAR CurrentWeekCost  = [Projected_Overtime_Cost_INR]
+			VAR PreviousWeekCost =
+			    CALCULATE(
+			        [Projected_Overtime_Cost_INR],
+			        DATEADD( dim_date[Date], -7, DAY )
+			    )
+			RETURN
+			    DIVIDE(
+			        CurrentWeekCost - PreviousWeekCost,
+			        IF( PreviousWeekCost = 0, BLANK(), PreviousWeekCost ),
+			        BLANK()
+			    )
+		formatString: 0.0%
+		lineageTag: 3c710db4-6b40-403f-a7c8-2778e3b3858e
+
+	measure Rolling_7D_Avg_Utilization =
+			AVERAGEX(
+			    DATESINPERIOD( dim_date[Date], LASTDATE( dim_date[Date] ), -7, DAY ),
+			    [OR_Utilization_Pct]
+			)
+		formatString: 0.0%
+		lineageTag: 616de8fa-2a2d-4ac6-a2d5-d6554634644d
+
+	measure Hist_vs_Sim_Duration_Variance_Pct =
+			VAR HistAvg = AVERAGEX( fact_historical_cases, fact_historical_cases[actual_duration_min] )
+			VAR SimAvg  = AVERAGEX( FILTER( Fact_Surgical_Schedule, Fact_Surgical_Schedule[case_status] <> "Cancelled" ), Fact_Surgical_Schedule[actual_duration_min] )
+			RETURN DIVIDE( SimAvg - HistAvg, IF( HistAvg = 0, BLANK(), HistAvg ), BLANK() )
+		formatString: 0.0%
+		lineageTag: 3f8bf51c-cd8e-4b28-80a1-0d802f8a1600
+
+	measure Surgeon_Velocity_Index_Avg =
+			AVERAGEX(
+			    FILTER(
+			        fact_historical_cases,
+			        NOT ISBLANK( fact_historical_cases[VelocityIndex] )
+			    ),
+			    fact_historical_cases[VelocityIndex]
+			)
+		formatString: 0.00
+		lineageTag: c97a650c-db36-4427-84e8-e6cdb3829cf9
+
+	measure Exceeded_P90_Rate_Pct =
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS( fact_historical_cases ),
+			        fact_historical_cases[ExceededP90_Flag] = TRUE()
+			    ),
+			    COUNTROWS( fact_historical_cases ),
+			    0
+			)
+		formatString: 0.0%
+		lineageTag: a83f3837-8881-4bba-8049-a2508e1f74d3
+
+	measure KPI_Util_Formatted = FORMAT( [OR_Utilization_Pct], "0.0%" ) & "  " & [Target_Utilization_Band]
+		lineageTag: 1dcf2175-5b5b-455d-b9ee-f0eacd8c27f1
+
+	measure KPI_OT_Cost_Formatted = "Rs " & FORMAT( [Projected_Overtime_Cost_INR], "#,##0" )
+		lineageTag: 6c96fcaa-7986-41e4-9e63-9dc3c27df855
+
+	measure Total_Cost_All_Delays_INR =
+			[Projected_Overtime_Cost_INR]
+			    + [PACU_Total_Hold_Cost_INR]
+			    + SUMX(
+			        Fact_Surgical_Schedule,
+			        IF( Fact_Surgical_Schedule[case_status] = "Cancelled", 15000, 0 )
+			    )
+		formatString: #,##0
+		lineageTag: aa9562f4-29a7-48f7-b722-259cc90e267b
+
+	measure Avg_CCI_Score = AVERAGEX( fact_historical_cases, fact_historical_cases[cci_score] )
+		formatString: 0.00
+		lineageTag: 86d3732f-91bf-422d-83fc-d3226c198332
+
+	measure Avg_Recovery_Bed_Hours =
+			AVERAGEX(
+			    FILTER( Fact_Surgical_Schedule, Fact_Surgical_Schedule[case_status] <> "Cancelled" ),
+			    DIVIDE( Fact_Surgical_Schedule[pacu_duration_min], 60 )
+			        + IF(
+			            Fact_Surgical_Schedule[icu_transfer_flag],
+			            Fact_Surgical_Schedule[icu_los_hours],
+			            0
+			          )
+			)
+		formatString: 0.0
+		lineageTag: 23dfbba3-353f-497c-9850-dfcb95ec1f74
+
+	measure Case_Count =
+			CALCULATE(
+			    COUNTROWS( Fact_Surgical_Schedule ),
+			    Fact_Surgical_Schedule[case_status] <> "Cancelled"
+			)
+		lineageTag: 07fe7899-2f1e-413f-a794-6cccf1c95848
+
+	measure Avg_ICU_Occupancy = AVERAGE( sim_hourly_bed_trace[icu_occupancy] )
+		formatString: 0.0
+		lineageTag: cdac008e-bd0a-466a-87f8-d96cfde7625b
+
+	measure Avg_PACU_Occupancy = AVERAGE( sim_hourly_bed_trace[pacu_occupancy] )
+		formatString: 0.0
+		lineageTag: cdcfc461-6223-43d5-a9ee-904ae98e2c9a
+
+	measure ICU_Bed_Capacity = 16
+		lineageTag: ee9f1ad2-f5dd-4748-90cf-6d9e6141b4af
+
+	measure ICU_80pct_Threshold = 16 * 0.8
+		formatString: 0.0
+		lineageTag: 2de6e1f5-cc2f-4fe9-acea-3e1d09dde39f
+
+	measure Util_Heat_Color =
+			VAR U = [OR_Utilization_Pct_ByRoom]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK( U ), BLANK(),
+			        U >= 1.00, "#DC2626",
+			        U >= 0.85, "#D97706",
+			        U >= 0.70, "#059669",
+			        "#1C3050"
+			    )
+		lineageTag: aa76acd1-edbf-4e80-ac10-1c6e96d6f45d
+
+	measure Velocity_Color =
+			VAR V = [Surgeon_Velocity_Index_Avg]
+			RETURN
+			    SWITCH( TRUE(), V > 1.15, "#DC2626", V >= 1.05, "#D97706", "#059669" )
+		lineageTag: 67ee0b79-b74d-4a54-b943-726c866d72df
+
+	column Value
+		dataType: string
+		isHidden
+		lineageTag: 11e72986-25cd-4511-b651-5e426db57b43
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = {"x"}
+
+	annotation PBI_Id = f34a5a53c7764b79866eed55c714a637
+

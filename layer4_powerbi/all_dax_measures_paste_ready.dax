@@ -1,0 +1,400 @@
+// ===================================================================
+// OR-ScheduleIQ | ALL DAX MEASURES
+// ===================================================================
+// HOW TO USE (Tabular Editor — FREE, fastest method):
+//   1. Download Tabular Editor 2 (free): https://github.com/TabularEditor/TabularEditor/releases
+//   2. Open it → File → Open → From DB → localhost → your .pbix (PBI must be open)
+//   3. Right-click _Measures table → Script → paste this → Run
+//
+// ALTERNATIVE (manual in Power BI):
+//   Right-click _Measures → New Measure → paste ONE block at a time
+// ===================================================================
+
+
+// ─── SECTION 1: BASE AGGREGATIONS ───────────────────────────────
+
+Total_Cases = COUNTROWS( Fact_Surgical_Schedule )
+
+Completed_Cases =
+CALCULATE(
+    COUNTROWS( Fact_Surgical_Schedule ),
+    Fact_Surgical_Schedule[case_status] = "Completed"
+)
+
+Cancelled_Cases =
+CALCULATE(
+    COUNTROWS( Fact_Surgical_Schedule ),
+    Fact_Surgical_Schedule[case_status] = "Cancelled"
+)
+
+Emergency_Cases =
+CALCULATE(
+    COUNTROWS( Fact_Surgical_Schedule ),
+    Fact_Surgical_Schedule[emergency_flag] = TRUE()
+)
+
+Total_Scheduled_Hours =
+DIVIDE(
+    SUMX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[scheduled_duration_min] ),
+    60
+)
+
+Total_Actual_Hours =
+DIVIDE(
+    SUMX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[actual_duration_min] ),
+    60
+)
+
+
+// ─── SECTION 2: OR UTILIZATION ──────────────────────────────────
+// Format: 0.0%
+
+OR_Utilization_Pct =
+VAR TotalActualMin =
+    SUMX(
+        Fact_Surgical_Schedule,
+        IF(
+            Fact_Surgical_Schedule[case_status] <> "Cancelled",
+            Fact_Surgical_Schedule[actual_duration_min],
+            0
+        )
+    )
+VAR DistinctDays = DISTINCTCOUNT( Fact_Surgical_Schedule[date_key] )
+VAR NumRooms     = DISTINCTCOUNT( Fact_Surgical_Schedule[room_id] )
+VAR AvailableMin = NumRooms * DistinctDays * 600
+RETURN ROUND( DIVIDE( TotalActualMin, AvailableMin, 0 ), 4 )
+
+OR_Utilization_Pct_ByRoom =
+VAR TotalActualMin =
+    SUMX(
+        Fact_Surgical_Schedule,
+        IF(
+            Fact_Surgical_Schedule[case_status] <> "Cancelled",
+            Fact_Surgical_Schedule[actual_duration_min],
+            0
+        )
+    )
+VAR DistinctDays = DISTINCTCOUNT( Fact_Surgical_Schedule[date_key] )
+VAR AvailableMin = DistinctDays * 600
+RETURN ROUND( DIVIDE( TotalActualMin, AvailableMin, 0 ), 4 )
+
+Target_Utilization_Band =
+VAR Util = [OR_Utilization_Pct]
+RETURN
+    SWITCH(
+        TRUE(),
+        Util >= 1.00, "OVERTIME",
+        Util >= 0.85, "BUFFER BREACH",
+        Util >= 0.70, "ON TRACK",
+        "UNDERUTILIZED"
+    )
+
+
+// ─── SECTION 3: OVERTIME ────────────────────────────────────────
+
+Total_Overtime_Minutes =
+SUMX( Fact_Surgical_Schedule, MAX( 0, Fact_Surgical_Schedule[overrun_min] ) )
+
+// Format: 0.0
+Total_Overtime_Hours = DIVIDE( [Total_Overtime_Minutes], 60 )
+
+Rooms_With_Overtime =
+CALCULATE(
+    DISTINCTCOUNT( Fact_Surgical_Schedule[room_id] ),
+    Fact_Surgical_Schedule[overrun_min] > 0
+)
+
+// Format: #,##0
+Projected_Overtime_Cost_INR =
+VAR BufferMin   = [Buffer_Time_Minutes Value]
+VAR CostPerHour = [OT_CostRate_INR Value]
+VAR OvertimeMinutes =
+    SUMX(
+        Fact_Surgical_Schedule,
+        MAX(
+            0,
+            Fact_Surgical_Schedule[actual_duration_min]
+                - Fact_Surgical_Schedule[scheduled_duration_min]
+                - BufferMin
+        )
+    )
+VAR OvertimeHours = DIVIDE( OvertimeMinutes, 60 )
+RETURN ROUND( OvertimeHours * CostPerHour, 0 )
+
+OT_Cost_vs_Baseline_INR =
+VAR BaselineCost =
+    CALCULATE(
+        [Projected_Overtime_Cost_INR],
+        'Buffer_Time_Minutes'[Buffer_Time_Minutes] = 30
+    )
+RETURN BaselineCost - [Projected_Overtime_Cost_INR]
+
+Overtime_Alert_Color =
+VAR OT = [Total_Overtime_Hours]
+RETURN
+    SWITCH(
+        TRUE(),
+        OT > 8,  "#DC2626",
+        OT > 3,  "#D97706",
+        OT > 0,  "#F59E0B",
+        "#059669"
+    )
+
+
+// ─── SECTION 4: CANCELLATION RISK ──────────────────────────────
+// Format: 0.0%
+
+Case_Cancellation_Rate_Pct =
+DIVIDE( [Cancelled_Cases], [Total_Cases], 0 )
+
+Predicted_Cancellation_Risk_Pct =
+VAR AvgASA =
+    AVERAGEX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[asa_score] )
+VAR EmergencyRate =
+    DIVIDE( [Emergency_Cases], [Total_Cases], 0 )
+VAR HighRiskRate =
+    DIVIDE(
+        CALCULATE(
+            COUNTROWS( Fact_Surgical_Schedule ),
+            Fact_Surgical_Schedule[risk_tier] IN { "High", "Critical" }
+        ),
+        [Total_Cases],
+        0
+    )
+RETURN
+    ROUND(
+        0.03 + 0.015 * (AvgASA - 2) + 0.12 * EmergencyRate + 0.08 * HighRiskRate,
+        4
+    )
+
+
+// ─── SECTION 5: PACU ───────────────────────────────────────────
+
+Total_PACU_Holds =
+CALCULATE(
+    COUNTROWS( Fact_Surgical_Schedule ),
+    Fact_Surgical_Schedule[pacu_hold_flag] = TRUE()
+)
+
+// Format: 0.0%
+PACU_Hold_Rate_Pct = DIVIDE( [Total_PACU_Holds], [Total_Cases], 0 )
+
+Avg_PACU_Duration_min =
+AVERAGEX(
+    FILTER(
+        Fact_Surgical_Schedule,
+        NOT ISBLANK( Fact_Surgical_Schedule[pacu_duration_min] )
+    ),
+    Fact_Surgical_Schedule[pacu_duration_min]
+)
+
+PACU_Hold_Time_Hours =
+DIVIDE(
+    SUMX(
+        FILTER( Fact_Surgical_Schedule, Fact_Surgical_Schedule[pacu_hold_flag] = TRUE() ),
+        MAX( 0, Fact_Surgical_Schedule[pacu_duration_min] - 90 )
+    ),
+    60
+)
+
+// Format: #,##0
+PACU_Total_Hold_Cost_INR =
+SUMX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[PACU_HoldCost_INR] )
+
+
+// ─── SECTION 6: ICU ────────────────────────────────────────────
+
+Total_ICU_Transfers =
+CALCULATE(
+    COUNTROWS( Fact_Surgical_Schedule ),
+    Fact_Surgical_Schedule[icu_transfer_flag] = TRUE()
+)
+
+// Format: 0.0%
+ICU_Transfer_Rate_Pct = DIVIDE( [Total_ICU_Transfers], [Completed_Cases], 0 )
+
+Avg_ICU_LOS_Hours =
+AVERAGEX(
+    FILTER(
+        Fact_Surgical_Schedule,
+        Fact_Surgical_Schedule[icu_transfer_flag] = TRUE()
+            && NOT ISBLANK( Fact_Surgical_Schedule[icu_los_hours] )
+    ),
+    Fact_Surgical_Schedule[icu_los_hours]
+)
+
+Peak_ICU_Bed_Demand =
+VAR ICUTransfers  = [Total_ICU_Transfers]
+VAR AvgLOS        = [Avg_ICU_LOS_Hours]
+VAR WorkingDays   = DISTINCTCOUNT( Fact_Surgical_Schedule[date_key] )
+VAR DailyArrivals = DIVIDE( ICUTransfers, WorkingDays, 0 )
+VAR AvgOccupancy  = DailyArrivals * DIVIDE( AvgLOS, 24, 0 )
+RETURN ROUND( AvgOccupancy * 1.5, 0 )
+
+// Format: 0.0%
+ICU_Bed_Saturation_Risk =
+VAR PeakDemand = [Peak_ICU_Bed_Demand]
+VAR TotalBeds  = 16
+RETURN ROUND( DIVIDE( PeakDemand, TotalBeds, 0 ), 4 )
+
+ICU_Saturation_Label =
+VAR Sat = [ICU_Bed_Saturation_Risk]
+RETURN
+    SWITCH(
+        TRUE(),
+        Sat >= 0.95, "CRITICAL - Immediate Action Required",
+        Sat >= 0.80, "HIGH - ICU Block Risk Active",
+        Sat >= 0.60, "MODERATE - Monitor Closely",
+        "NORMAL - Within Safe Operating Range"
+    )
+
+ICU_Saturation_Color =
+VAR Sat = [ICU_Bed_Saturation_Risk]
+RETURN
+    SWITCH(
+        TRUE(),
+        Sat >= 0.95, "#DC2626",
+        Sat >= 0.80, "#EA580C",
+        Sat >= 0.60, "#D97706",
+        "#059669"
+    )
+
+// Format: #,##0
+Total_ICU_Bed_Cost_INR =
+SUMX(
+    FILTER(
+        Fact_Surgical_Schedule,
+        Fact_Surgical_Schedule[icu_transfer_flag] = TRUE()
+    ),
+    Fact_Surgical_Schedule[icu_los_hours] * 3500
+)
+
+
+// ─── SECTION 7: BUFFER WHAT-IF ─────────────────────────────────
+
+Dynamic_Turnover_Buffer = [Buffer_Time_Minutes Value]
+
+Adjusted_Cases_Per_Room_Per_Day =
+VAR BufferMin  = [Buffer_Time_Minutes Value]
+VAR AvgProcMin = AVERAGEX(
+                    Fact_Surgical_Schedule,
+                    Fact_Surgical_Schedule[scheduled_duration_min]
+                 )
+VAR SlotSize   = AvgProcMin + BufferMin
+RETURN FLOOR( DIVIDE( 600, SlotSize, 0 ), 1 )
+
+// Format: 0.0%
+Buffer_Efficiency_Rate_Pct =
+VAR BufferMin = [Buffer_Time_Minutes Value]
+VAR AvgActualTurnover =
+    AVERAGEX(
+        FILTER(
+            Fact_Surgical_Schedule,
+            NOT ISBLANK( Fact_Surgical_Schedule[turnover_min] )
+        ),
+        Fact_Surgical_Schedule[turnover_min]
+    )
+RETURN ROUND( DIVIDE( AvgActualTurnover, BufferMin, 0 ), 4 )
+
+Wasted_Buffer_Hours =
+VAR BufferMin = [Buffer_Time_Minutes Value]
+VAR AvgActualTurnover =
+    AVERAGEX(
+        FILTER(
+            Fact_Surgical_Schedule,
+            NOT ISBLANK( Fact_Surgical_Schedule[turnover_min] )
+        ),
+        Fact_Surgical_Schedule[turnover_min]
+    )
+VAR WastedMin = MAX( 0, BufferMin - AvgActualTurnover ) * [Total_Cases]
+RETURN ROUND( DIVIDE( WastedMin, 60 ), 1 )
+
+
+// ─── SECTION 8: TIME INTELLIGENCE ──────────────────────────────
+
+Cases_MTD =
+CALCULATE( [Total_Cases], DATESMTD( dim_date[Date] ) )
+
+OT_Cost_WoW_Change_Pct =
+VAR CurrentWeekCost  = [Projected_Overtime_Cost_INR]
+VAR PreviousWeekCost =
+    CALCULATE(
+        [Projected_Overtime_Cost_INR],
+        DATEADD( dim_date[Date], -7, DAY )
+    )
+RETURN
+    DIVIDE(
+        CurrentWeekCost - PreviousWeekCost,
+        IF( PreviousWeekCost = 0, BLANK(), PreviousWeekCost ),
+        BLANK()
+    )
+
+Rolling_7D_Avg_Utilization =
+AVERAGEX(
+    DATESINPERIOD( dim_date[Date], LASTDATE( dim_date[Date] ), -7, DAY ),
+    [OR_Utilization_Pct]
+)
+
+
+// ─── SECTION 9: HISTORICAL COMPARISON ──────────────────────────
+
+Hist_vs_Sim_Duration_Variance_Pct =
+VAR HistAvg = AVERAGEX( fact_historical_cases, fact_historical_cases[actual_duration_min] )
+VAR SimAvg  = AVERAGEX( Fact_Surgical_Schedule, Fact_Surgical_Schedule[actual_duration_min] )
+RETURN DIVIDE( SimAvg - HistAvg, IF( HistAvg = 0, BLANK(), HistAvg ), BLANK() )
+
+// Format: 0.00
+Surgeon_Velocity_Index_Avg =
+AVERAGEX(
+    FILTER(
+        fact_historical_cases,
+        NOT ISBLANK( fact_historical_cases[VelocityIndex] )
+    ),
+    fact_historical_cases[VelocityIndex]
+)
+
+// Format: 0.0%
+Exceeded_P90_Rate_Pct =
+DIVIDE(
+    CALCULATE(
+        COUNTROWS( fact_historical_cases ),
+        fact_historical_cases[ExceededP90_Flag] = TRUE()
+    ),
+    COUNTROWS( fact_historical_cases ),
+    0
+)
+
+
+// ─── SECTION 10: KPI FORMATTING & GRAND TOTALS ─────────────────
+
+KPI_Util_Formatted =
+FORMAT( [OR_Utilization_Pct], "0.0%" ) & "  " & [Target_Utilization_Band]
+
+KPI_OT_Cost_Formatted =
+"Rs " & FORMAT( [Projected_Overtime_Cost_INR], "#,##0" )
+
+// Format: #,##0
+Total_Cost_All_Delays_INR =
+[Projected_Overtime_Cost_INR]
+    + [PACU_Total_Hold_Cost_INR]
+    + SUMX(
+        Fact_Surgical_Schedule,
+        IF( Fact_Surgical_Schedule[case_status] = "Cancelled", 15000, 0 )
+    )
+
+
+// ─── SECTION 11: SCATTER PLOT MEASURES ──────────────────────────
+
+Avg_CCI_Score =
+AVERAGEX( fact_historical_cases, fact_historical_cases[CCI_Score] )
+
+Avg_Recovery_Bed_Hours =
+AVERAGEX(
+    Fact_Surgical_Schedule,
+    DIVIDE( Fact_Surgical_Schedule[pacu_duration_min], 60 )
+        + IF(
+            Fact_Surgical_Schedule[icu_transfer_flag],
+            Fact_Surgical_Schedule[icu_los_hours],
+            0
+          )
+)

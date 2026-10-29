@@ -1,0 +1,129 @@
+table sim_hourly_bed_trace
+	lineageTag: 60a13712-6abd-46ac-8a69-bc3f7ec2eb7c
+
+	column sim_time_min
+		dataType: int64
+		formatString: 0
+		lineageTag: 40516459-1e79-4d76-ad54-0397c810fbec
+		summarizeBy: none
+		sourceColumn: sim_time_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		lineageTag: ff088405-6d78-44a9-8009-27164e0bb374
+		summarizeBy: none
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column hour
+		dataType: int64
+		formatString: 0
+		lineageTag: f1474422-bff5-4ca0-af94-af6af53bc82f
+		summarizeBy: none
+		sourceColumn: hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_occupancy
+		dataType: int64
+		formatString: 0
+		lineageTag: 89395c58-7bc7-430c-8be3-0dfd0222b746
+		summarizeBy: none
+		sourceColumn: icu_occupancy
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: 715a9ac1-df79-45bc-a7f3-f3de8d5d76ab
+		summarizeBy: none
+		sourceColumn: icu_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_occupancy
+		dataType: int64
+		formatString: 0
+		lineageTag: cd05f80c-3853-4b0d-8d62-74a4f7cd5c46
+		summarizeBy: none
+		sourceColumn: pacu_occupancy
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_capacity
+		dataType: int64
+		formatString: 0
+		lineageTag: c0532353-9582-4a74-83f0-deec32821404
+		summarizeBy: none
+		sourceColumn: pacu_capacity
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_saturation
+		dataType: boolean
+		lineageTag: 63a71df8-fff7-4dbb-8b27-3da2735a118d
+		summarizeBy: none
+		sourceColumn: icu_saturation
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_saturation
+		dataType: boolean
+		lineageTag: 88b70b97-1e4a-4214-abb7-20b34ccb453a
+		summarizeBy: none
+		sourceColumn: pacu_saturation
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_str
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: a9ca6c14-9e8b-452b-beb7-78fd307c51f8
+		summarizeBy: none
+		sourceColumn: date_str
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column time_label
+		dataType: string
+		lineageTag: 51c5f3f0-8020-48f5-9bdd-c4f2d190a16e
+		summarizeBy: none
+		sourceColumn: time_label
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_saturation_pct
+		dataType: double
+		lineageTag: a59be2c0-b561-4023-866a-fbd5afaca851
+		summarizeBy: sum
+		sourceColumn: icu_saturation_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	column pacu_saturation_pct
+		dataType: double
+		lineageTag: 2ccf39f2-c93b-4b71-90f8-44203ec00fa6
+		summarizeBy: sum
+		sourceColumn: pacu_saturation_pct
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sim_hourly_bed_trace = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "simulated\sim_hourly_bed_trace.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"sim_time_min", Int64.Type}, {"day", Int64.Type}, {"hour", Int64.Type}, {"icu_occupancy", Int64.Type}, {"icu_capacity", Int64.Type}, {"pacu_occupancy", Int64.Type}, {"pacu_capacity", Int64.Type}, {"icu_saturation", type logical}, {"pacu_saturation", type logical}, {"date_str", type date}, {"time_label", type text}, {"icu_saturation_pct", type number}, {"pacu_saturation_pct", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+
