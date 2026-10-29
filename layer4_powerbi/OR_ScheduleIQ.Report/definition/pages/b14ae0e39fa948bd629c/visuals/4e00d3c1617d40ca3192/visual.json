@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "4e00d3c1617d40ca3192",
   "position": {
     "x": 808,
@@ -254,5 +254,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "bce66699a5ee32ad091a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_Surgical_Schedule"
+              }
+            },
+            "Property": "Duration_Bin_30min"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6285ef592a9b47e0b037",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Case_Count"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
