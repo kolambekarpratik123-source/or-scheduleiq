@@ -9,6 +9,18 @@
 
 A production-grade, four-layer decision-support system that models surgical case duration uncertainty, simulates Operating Room (OR) queue dynamics using Discrete-Event Simulation (DES), and surfaces resource bottlenecks on an executive-grade Power BI dashboard.
 
+## Dashboard
+
+**Page 1: OR Utilization & Overtime Risk**: theatre-by-day utilization heatmap, case-duration distribution, What-If sliders for turnover buffer and OT cost rate, surgeon velocity index.
+
+![OR Flow page](docs/dashboard_or_flow.png)
+
+**Page 2: PACU & ICU Bottleneck**: hourly ICU occupancy vs. capacity, length-of-stay vs. PACU time by procedure, PACU holds by risk tier, cost breakdown by specialty.
+
+![ICU / PACU page](docs/dashboard_icu_pacu.png)
+
+**Headline results (30-day simulation, 8 theatres):** 80.6% net OR utilization, 209 overtime hours past 18:00 (~₹7.96 lakh projected OT cost), 11.8% cancellation rate, ICU saturation risk 62.5%.
+
 ### System Architecture
 
 ```
